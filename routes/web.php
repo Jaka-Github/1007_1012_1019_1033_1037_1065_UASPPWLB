@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\admin\AnggotaController;
 use App\Http\Controllers\admin\KeluargaController;
+use App\Http\Controllers\Admin\StatisticController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -14,7 +15,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
         if (auth()->user()->role === 'admin') {
-            return view('admin.dashboard');
+            return redirect()->route('admin.statistik');
         } else {
             return view('users.dashboard');
         }
@@ -31,6 +32,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('keluarga', KeluargaController::class);
         Route::resource('keluarga.anggota', AnggotaController::class);
+        Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
+
 
 });
 
