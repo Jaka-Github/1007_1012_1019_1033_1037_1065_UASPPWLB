@@ -43,7 +43,7 @@
         <h3 class="text-lg font-semibold mb-4 text-gray-700">Aksi Cepat</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <a href="#" class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded hover:bg-blue-200">
-                🔧 Kelola Pengguna
+                🔧 Kelola Keluarga Pendikar
             </a>
             <a href="#" class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded hover:bg-green-200">
                 📅 Kelola Jadwal
