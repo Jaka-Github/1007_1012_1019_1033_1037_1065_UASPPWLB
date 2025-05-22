@@ -3,10 +3,25 @@
 @section('title', 'Keluarga Pendikar')
 
 @section('header')
+    <script src="//unpkg.com/alpinejs" defer></script>
     <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
         CRUD Keluarga Pendikar 
     </h2>
 @endsection
+
+@if (session('success'))
+    <div 
+        x-data="{ show: true }" 
+        x-init="setTimeout(() => show = false, 3000)" 
+        x-show="show"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full px-4"
+    >
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg">
+            {{ session('success') }}
+        </div>
+    </div>
+@endif
+
 
 @section('content')
 <div class="px-4 py-6 sm:px-6 lg:px-8">
