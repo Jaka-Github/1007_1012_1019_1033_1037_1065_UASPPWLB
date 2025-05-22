@@ -18,6 +18,6 @@ class KeluargaPendikar extends Model
     // Relasi ke anggota pendikar
     public function anggota()
     {
-        return $this->hasMany(AnggotaPendikar::class, 'keluarga_id');
+        return $this->hasMany(AnggotaPendikar::class, 'keluarga_id' , 'id');
     }
 }
