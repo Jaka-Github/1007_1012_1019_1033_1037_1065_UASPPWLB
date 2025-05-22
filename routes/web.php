@@ -34,6 +34,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
+Route::put('/admin/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update']);
+Route::delete('/admin/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy']);
+
 require __DIR__.'/auth.php';
 
 

@@ -62,7 +62,7 @@ class AnggotaController extends Controller
             'umur' => 'required|integer|min:0',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'alamat' => 'nullable|string|max:500',
-            'agama_id' => 'nullable|exists:agamas,id',
+            'agama_id' => 'nullable|exists:agama,id',
         ]);
 
         $anggota->update($validated);
