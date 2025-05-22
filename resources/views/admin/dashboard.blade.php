@@ -38,9 +38,9 @@
         </div>
 
         {{-- Grafik --}}
-        <div class="bg-white mt-8 p-6 rounded-lg shadow">
+        <div class="bg-white mt-12 p-6 rounded-lg shadow">
             <h4 class="text-lg font-semibold mb-4">Grafik Statistik</h4>
-            <div class="relative" style="height: 400px;">
+            <div class="relative w-full max-w-lg mx-auto h-[300px]">
                 <canvas id="statistikChart"></canvas>
             </div>
         </div>
@@ -121,9 +121,9 @@
             window.statistikChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Keluarga', 'Jadwal', 'Diskusi'],
+                    labels: ['Keluarga', 'Ibadah', 'Diskusi'],
                     datasets: [{
-                        label: 'Jumlah',
+                        label: 'Keluarga',
                         data: [jumlahKeluarga, jumlahJadwal, jumlahDiskusi],
                         backgroundColor: [
                             'rgba(59, 130, 246, 0.8)',
@@ -152,13 +152,24 @@
                         }
                     },
                     scales: {
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 16 
+                                }
+                            }
+                        },
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                stepSize: 1
+                                stepSize: 1,
+                                font: {
+                                    size: 14
+                                }
                             }
                         }
                     },
+
                     animation: {
                         duration: 1000,
                         easing: 'easeInOutQuart'
