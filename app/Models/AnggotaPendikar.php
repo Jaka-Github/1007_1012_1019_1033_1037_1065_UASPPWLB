@@ -14,6 +14,9 @@ class AnggotaPendikar extends Model
     protected $fillable = [
         'nama',
         'agama_id',
+        'umur',
+        'alamat',
+        'jenis_kelamin',
         'user_id',
         'keluarga_id',
     ];
@@ -33,6 +36,6 @@ class AnggotaPendikar extends Model
     // Relasi ke keluarga pendikar
     public function keluarga()
     {
-        return $this->belongsTo(KeluargaPendikar::class, 'keluarga_id');
+        return $this->belongsTo(KeluargaPendikar::class, 'keluarga_id', 'id');
     }
 }

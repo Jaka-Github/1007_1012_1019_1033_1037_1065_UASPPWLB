@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\admin\AnggotaController;
+use App\Http\Controllers\admin\KeluargaController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -24,6 +26,12 @@ Route::middleware('auth')->group(function () {
 
     // Route logout
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('keluarga', KeluargaController::class);
+        Route::resource('keluarga.anggota', AnggotaController::class);
+
 });
 
 require __DIR__.'/auth.php';
