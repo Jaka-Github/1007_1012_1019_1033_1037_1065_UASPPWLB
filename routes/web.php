@@ -3,12 +3,13 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\admin\AnggotaController;
 use App\Http\Controllers\admin\KeluargaController;
 use App\Http\Controllers\Admin\StatisticController;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('register');
 });
 
 Route::middleware('auth')->group(function () {
