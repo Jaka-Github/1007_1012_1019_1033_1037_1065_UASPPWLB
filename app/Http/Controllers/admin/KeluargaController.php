@@ -26,7 +26,7 @@ class KeluargaController extends Controller
     public function edit($id)
     {
         $keluarga = KeluargaPendikar::findOrFail($id);
-        return view('admin.keluarga.edit', compact('keluarga'));
+        return view('admin.keluarga.index', compact('keluarga'));
     }
 
     public function update(Request $request, $id)
