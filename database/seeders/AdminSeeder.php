@@ -21,7 +21,7 @@ class AdminSeeder extends Seeder
             ['email' => 'admin@pendikar.com'], // kondisi pencarian
             [
                 'name' => 'Admin',
-                'password' => '12345678',
+                'password' => Hash::make('12345678'),
                 'role' => 'admin',
                 'agama_id' => null,
                 'email_verified_at' => now(),
