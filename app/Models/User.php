@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'users'; 
+
     protected $fillable = [
         'name', 'email', 'password', 'role', 'agama_id',
     ];
@@ -24,4 +26,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         //'password' => 'hashed',
     ];
+
+
 }

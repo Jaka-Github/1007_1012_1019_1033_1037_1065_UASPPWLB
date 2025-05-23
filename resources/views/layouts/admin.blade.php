@@ -8,6 +8,7 @@
     <style>
         [x-cloak] { display: none !important; }
     </style>
+    @yield('styles')
 </head>
 <body class="bg-gray-50 min-h-screen" x-data="{ sidebarOpen: true }" x-cloak>
 
