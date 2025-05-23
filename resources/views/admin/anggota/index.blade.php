@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 
+
 @section('content')
 <div class="container mx-auto p-6">
     <h2 class="text-2xl font-semibold mb-6">
@@ -68,14 +69,50 @@
                                 @endforeach
                             </select>
                         </td>
+
+                        <!-- Action Buttons-->
                         <td class="py-3 px-6">
-                            <div class="flex space-x-2 items-center">
-                                <button class="edit-btn bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</button>
-                                <button class="save-btn bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700" style="display: none;">Save</button>
-                                <button class="cancel-btn bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500" style="display: none;">Cancel</button>
-                                <button class="delete-btn bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 ml-2">Hapus</button>
+                            <div class="flex space-x-4 items-center text-sm font-medium">
+                                <button class="edit-btn text-white px-3 py-1 rounded hover:bg-yellow-500"
+                                        style=" padding: 0; color: inherit;">
+                                    <svg class="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                    </svg>
+                                    Edit
+                                </button>
+
+                                <button class="save-btn text-white px-3 py-1 rounded hover:bg-green-500"
+                                        style=" padding: 0; color: inherit; display: none;">
+                                    <svg class="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Save
+                                </button>
+
+                                <button class="cancel-btn text-white px-3 py-1 rounded hover:bg-gray-500"
+                                        style=" padding: 0; color: inherit; display: none;">
+                                    <svg class="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Cancel
+                                </button>
+
+                                <button class="delete-btn text-white px-3 py-1 rounded hover:bg-red-500 ml-2"
+                                        style=" padding: 0; color: inherit;">
+                                    <svg class="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m4-3h2a1 1 0 011 1v1H8V5a1 1 0 011-1z"/>
+                                    </svg>
+                                    Hapus
+                                </button>
                             </div>
                         </td>
+
                     </tr>
                 @endforeach
             </tbody>
