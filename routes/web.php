@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\admin\AnggotaController;
 use App\Http\Controllers\admin\KeluargaController;
 use App\Http\Controllers\Admin\StatisticController;
+use App\Http\Controllers\User\AnggotaPendikarController;
 
 Route::get('/', function () {
     return redirect()->route('register');
@@ -36,6 +37,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
 
 
+});
+
+//route untuk lihat anggota keluarga
+Route::middleware(['auth'])->group(function () {
+    Route::get('/anggota-keluarga', [AnggotaPendikarController::class, 'index'])->name('anggota.index');
 });
 
 Route::put('/admin/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update']);
