@@ -103,7 +103,7 @@
                                     Save
                                 </button>
 
-                                <button class="cancel-btn text-gray-600 hover:text-white px-3 py-2 rounded-lg hover:bg-gray-500 transition-all duration-200 transform hover:scale-105"
+                                <button class="cancel-btn text-gray-600 hover:text-white px-3 py-2 rounded-lg hover:bg-gray-300 transition-all duration-200 transform hover:scale-105"
                                         style="padding: 8px 12px; color: #6b7280; display: none;">
                                     <svg class="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -112,7 +112,7 @@
                                     Cancel
                                 </button>
 
-                                <button class="delete-btn text-red-600 hover:text-white px-3 py-2 rounded-lg hover:bg-red-500 transition-all duration-200 transform hover:scale-105"
+                                <button class="delete-btn text-red-600 hover:text-white px-3 py-2 rounded-lg hover:bg-red-400 transition-all duration-200 transform hover:scale-105"
                                         style="padding: 8px 12px; color: #dc2626;">
                                     <svg class="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
