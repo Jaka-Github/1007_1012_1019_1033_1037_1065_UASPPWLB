@@ -177,7 +177,7 @@
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Anggota Keluarga', 'Jadwal Ibadah', 'Tanggapan'],
+                labels: ['Keluarga', 'Jadwal Ibadah', 'Diskusi'],
                 datasets: [{
                     label: 'Aktivitas Anda',
                     data: [
