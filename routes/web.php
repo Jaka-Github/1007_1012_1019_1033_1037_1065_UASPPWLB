@@ -39,7 +39,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
-//route untuk lihat anggota keluarga
+//route untuk lihat anggota pendikar
 Route::middleware(['auth'])->group(function () {
     Route::get('/anggota-keluarga', [AnggotaPendikarController::class, 'index'])->name('anggota.index');
 });
