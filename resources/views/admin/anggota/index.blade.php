@@ -11,7 +11,7 @@
         <div class="flex items-center justify-between bg-yellow-100 text-yellow-800 p-4 rounded mb-6">
             <div>Belum ada anggota untuk keluarga ini.</div>
             <a href="{{ route('admin.keluarga.anggota.create', $keluarga->id) }}" 
-               class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-200">
+                class="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
                 + Tambah Anggota
             </a>
         </div>
