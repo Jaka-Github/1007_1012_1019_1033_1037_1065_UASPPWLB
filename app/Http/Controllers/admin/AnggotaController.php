@@ -60,26 +60,24 @@ class AnggotaController extends Controller
         return view('admin.anggota.edit', compact('keluarga', 'anggota', 'agamaList'));
     }
 
-    public function update(Request $request, KeluargaPendikar $keluarga, AnggotaPendikar $anggota)
+    public function update(Request $request, $keluargaId, $anggotaId)
     {
-        $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'umur' => 'required|integer|min:0',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'alamat' => 'nullable|string|max:500',
-            'users_id'=> 'nullable|exists:user,id',
-            'agama_id' => 'nullable|exists:agama,id',
-        ]);
+        $anggota = AnggotaPendikar::where('keluarga_id', $keluargaId)->findOrFail($anggotaId);
 
-        $anggota->update($validated);
+        $anggota->update($request->only([
+            'nama', 'agama_id', 'umur', 'alamat', 'jenis_kelamin', 'user_id'
+        ]));
 
-        return response()->json(['success' => true, 'anggota' => $anggota]);
+        return response()->json(['message' => 'Berhasil diupdate']);
     }
 
-    public function destroy(KeluargaPendikar $keluarga, AnggotaPendikar $anggota)
+    public function destroy($keluargaId, $anggotaId)
     {
+        $anggota = AnggotaPendikar::where('keluarga_id', $keluargaId)->findOrFail($anggotaId);
         $anggota->delete();
-        return response()->json(['success' => true]);
+
+        return response()->json(['message' => 'Berhasil dihapus']);
     }
+
 
 }
