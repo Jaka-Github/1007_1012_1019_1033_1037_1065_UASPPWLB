@@ -40,8 +40,14 @@
     <div class="grid md:grid-cols-3 gap-6 pb-8">
         @foreach($keluargas as $keluarga)
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-lg hover:border-blue-200">
-            <h4 class="text-xl font-semibold text-gray-800 mb-4">{{ $keluarga->nama_keluarga }}</h4>
-
+            <h4 class="text-xl font-semibold text-gray-800 mb-4 flex items-center justify-between">
+                {{ $keluarga->nama_keluarga }}
+                <span class="ml-2 bg-gray-100 text-gray-600 text-xs font-medium px-2 py-1 rounded-full">
+                    {{ $keluarga->anggota_count }} anggota
+                </span>
+            </h4>
+            <br>
+            <br>
             <div class="flex justify-between items-center flex-wrap gap-3">
                 {{-- Tombol Hapus --}}
                 <form action="{{ route('admin.keluarga.destroy', $keluarga->id) }}" method="POST" class="flex items-center">
