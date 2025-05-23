@@ -18,6 +18,19 @@
         </div>
 
         <div class="mb-4">
+            <label class="block text-gray-700">Akun User Terkait Jika Ada</label>
+            <select name="user_id" class="form-select mt-1 block w-full">
+                <option value="">-- Pilih User --</option>
+                @foreach ($userList as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endforeach
+            </select>
+            @error('user_id')
+                <div class="text-red-600 mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-4">
             <label for="umur" class="block mb-1 font-medium">Umur <span class="text-red-600">*</span></label>
             <input 
                 type="number" 
