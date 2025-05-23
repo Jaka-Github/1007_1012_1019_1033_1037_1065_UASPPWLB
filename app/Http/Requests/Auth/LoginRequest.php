@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
 class LoginRequest extends FormRequest
 {
@@ -43,7 +44,8 @@ class LoginRequest extends FormRequest
 
         $user = \App\Models\User::where('email', $this->input('email'))->first();
 
-        if (!$user || $user->password !== $this->input('password')) {
+        // GANTI INI
+        if (!$user || !Hash::check($this->input('password'), $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
