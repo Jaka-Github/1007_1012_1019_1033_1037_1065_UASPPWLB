@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\KeluargaPendikar;
 
+
 class KeluargaController extends Controller
 {
     public function index()
     {
-        $keluargas = KeluargaPendikar::all();
+        $keluargas = KeluargaPendikar::withCount('anggota')->get();
         return view('admin.keluarga.index', compact('keluargas'));
     }
+
 
     public function store(Request $request)
     {
