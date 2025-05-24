@@ -132,7 +132,7 @@
                         </div>
                     </div>
                     <h4 class="text-sm text-gray-500 uppercase mb-3 font-medium tracking-wide">Diskusi Aktif</h4>
-                    <p class="text-4xl font-light bg-gradient-to-r from-emerald-600 to-slate-700 bg-clip-text text-transparent mb-4">
+                    <p class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-slate-700 bg-clip-text text-transparent mb-4">
                         {{ $jumlahDiskusi }}
                     </p>
                     <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
