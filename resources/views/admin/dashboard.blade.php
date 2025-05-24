@@ -139,7 +139,7 @@
             <div class="relative bg-white/90 backdrop-blur-sm border border-stone-200/60 p-8 rounded-3xl shadow-earth">
                 <div class="flex items-center justify-between mb-8">
                     <h4 class="text-2xl font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">
-                        Earth Analytics Overview
+                        Analytics Overview
                     </h4>
                     <div class="flex space-x-3">
                         <div class="w-2 h-2 bg-amber-500 rounded-full animate-gentle-pulse"></div>
@@ -158,7 +158,7 @@
     <section class="py-6 px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="flex items-center mb-8">
             <h3 class="text-2xl font-light bg-gradient-to-r from-amber-800 to-orange-700 bg-clip-text text-transparent mr-6">
-                Natural Actions
+                Actions
             </h3>
             <div class="flex-1 h-px bg-gradient-to-r from-stone-300/50 to-transparent"></div>
         </div>
@@ -468,7 +468,7 @@
                         },
                         title: {
                             display: true,
-                            text: 'Earth Dashboard Statistics',
+                            text: 'Dashboard Statistics',
                             color: '#57534e',
                             font: {
                                 size: 18,
