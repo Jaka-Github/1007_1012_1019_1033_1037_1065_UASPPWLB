@@ -13,7 +13,10 @@ class AnggotaPendikarController extends Controller
     {
         $user = Auth::user();
 
-        $anggota = AnggotaPendikar::where('user_id', $user->id)->get();
+        $anggota = AnggotaPendikar::with('agama') // eager load relasi agama
+            ->where('user_id', $user->id)
+            ->get();
+
 
         return view('users.anggota_pendikar.index', compact('anggota'));
     }
