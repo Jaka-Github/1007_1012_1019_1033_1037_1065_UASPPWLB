@@ -52,6 +52,7 @@
                         </td>
                         <td class="py-4 px-6">
                             <select name="user_id" class="form-select w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                                <option value="" {{ $a->user_id == null ? 'selected' : '' }}>-- Tidak Ada User --</option>
                                 @foreach ($userList as $user)
                                     <option value="{{ $user->id }}" {{ $a->user_id == $user->id ? 'selected' : '' }}>
                                         {{ $user->name }}
@@ -59,7 +60,6 @@
                                 @endforeach
                             </select>
                         </td>
-
                         <td class="py-4 px-6">
                             <select name="jenis_kelamin" class="border rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" disabled>
                                 <option value="Laki-laki" {{ $a->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
