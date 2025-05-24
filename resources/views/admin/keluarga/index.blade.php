@@ -48,22 +48,18 @@
             </h4>
             <br>
             <br>
+            {{-- FIX: Gunakan container yang konsisten untuk semua tombol --}}
             <div class="flex justify-between items-center flex-wrap gap-3">
-                {{-- Tombol Hapus --}}
-                <form action="{{ route('admin.keluarga.destroy', $keluarga->id) }}" method="POST" class="flex items-center">
-                    @csrf
-                    @method('DELETE')
-                    <button 
-                        class="flex items-center text-red-600 hover:text-red-800 transition duration-200"
-                        onclick="return confirm('Hapus keluarga ini?')"
-                        type="submit"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4" />
-                        </svg>
-                        Hapus
-                    </button>
-                </form>
+                {{-- FIX: Tombol Hapus - Pindahkan styling ke button, bukan form --}}
+                <button 
+                    @click="deleteKeluarga({{ $keluarga->id }})"
+                    class="flex items-center text-red-600 hover:text-red-800 transition duration-200"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4" />
+                    </svg>
+                    Hapus
+                </button>
 
                 {{-- Tombol Edit --}}
                 <button 
@@ -87,6 +83,12 @@
         </div>
         @endforeach
     </div>
+
+    {{-- FIX: Form hapus tersembunyi --}}
+    <form x-ref="deleteForm" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
 
     {{-- Modal Edit Keluarga --}}
     <div 
@@ -137,6 +139,7 @@
                 </div>
 
                 {{-- Modal Body --}}
+                {{-- FIX: Route yang benar untuk update --}}
                 <form :action="`{{ route('admin.keluarga.index') }}/${editId}`" method="POST">
                     @csrf
                     @method('PUT')
@@ -202,6 +205,16 @@ function keluargaManager() {
             this.editNama = '';
             // Restore body scroll
             document.body.style.overflow = 'auto';
+        },
+
+        // FIX: Method untuk handle delete dengan confirmation
+        deleteKeluarga(id) {
+            if (confirm('Hapus keluarga ini?')) {
+                // Set action URL dan submit form
+                const form = this.$refs.deleteForm;
+                form.action = `{{ route('admin.keluarga.index') }}/${id}`;
+                form.submit();
+            }
         }
     }
 }
