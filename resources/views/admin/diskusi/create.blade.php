@@ -10,10 +10,10 @@
     <textarea name="isi" placeholder="Isi">{{ $diskusi->isi ?? '' }}</textarea>
 
     <select name="agama_id">
-        @foreach($agama as $a)
-            <option value="{{ $a->id }}" {{ (isset($diskusi) && $diskusi->agama_id == $a->id) ? 'selected' : '' }}>
-                {{ $a->nama }}
-            </option>
+        @foreach ($agamaList as $agama)
+                    <option value="{{ $agama->id }}" {{ $agama->id == $diskusi->agama_id ? 'selected' : '' }}>
+                        {{ $agama->nama }}
+                    </option>
         @endforeach
     </select>
 
