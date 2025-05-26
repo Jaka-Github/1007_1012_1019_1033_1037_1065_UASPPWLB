@@ -19,9 +19,10 @@ class DiskusiController extends Controller
 
     public function create()
     {
-        $agama = Agama::all();
-        return view('admin.diskusi.create', compact('agama'));
+        $agamaList = Agama::all();
+        return view('admin.diskusi.create', compact('agamaList'));
     }
+
 
     public function store(Request $request)
     {
@@ -46,10 +47,12 @@ class DiskusiController extends Controller
         return view('admin.diskusi.show', compact('diskusi'));
     }
 
-    public function edit(Diskusi $diskusi)
+    public function edit($id)
     {
-        $agama = Agama::all();
-        return view('admin.diskusi.edit', compact('diskusi', 'agama'));
+        $diskusi = Diskusi::findOrFail($id);
+        $agamaList = Agama::all(); // <- ini penting!
+
+    return view('admin.diskusi.edit', compact('diskusi', 'agamaList'));
     }
 
     public function update(Request $request, Diskusi $diskusi)
