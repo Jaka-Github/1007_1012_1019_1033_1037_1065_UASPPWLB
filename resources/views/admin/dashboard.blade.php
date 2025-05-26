@@ -51,21 +51,21 @@
                 <div class="flex items-center justify-between">
                     <div>
                        
-                        <h3 class="text-3xl font-bold mb-3 text-white drop-shadow-lg">
+                        <h3 class="text-3xl font-light mb-3 text-white drop-shadow-lg">
                             Welcome back, 
                             <span class="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent font-medium">
                                 {{ Auth::user()->name }}
                             </span>
                         </h3>
                         
-                        <p class="text-white/90 text-lg leading-relaxed font-bold mb-2">
+                        <p class="text-white/90 text-lg leading-relaxed font-light mb-2">
                             You're logged in as 
                             <strong class="inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-white border border-white/30 shadow-xl backdrop-blur-sm animate-gentle-pulse whitespace-nowrap ml-2">
                                 👑 ADMIN
                             </strong>
                         </p>
                         
-                        <p class="text-white/80 mt-3 font-semibold leading-relaxed">
+                        <p class="text-white/80 mt-3 font-light leading-relaxed">
                             Manage your platform with this clean and intuitive interface
                         </p>
                     </div>
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <h4 class="text-sm text-gray-500 uppercase mb-3 font-medium tracking-wide">Total Keluarga</h4>
-                    <p class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-slate-700 bg-clip-text text-transparent mb-4">
+                    <p class="text-4xl font-light bg-gradient-to-r from-blue-600 to-slate-700 bg-clip-text text-transparent mb-4">
                         {{ $jumlahKeluarga }}
                     </p>
                     <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                     <h4 class="text-sm text-gray-500 uppercase mb-3 font-medium tracking-wide">Diskusi Aktif</h4>
-                    <p class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-slate-700 bg-clip-text text-transparent mb-4">
+                    <p class="text-4xl font-light bg-gradient-to-r from-emerald-600 to-slate-700 bg-clip-text text-transparent mb-4">
                         {{ $jumlahDiskusi }}
                     </p>
                     <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
@@ -147,7 +147,7 @@
             <div class="absolute -inset-0.5 bg-gradient-to-br from-slate-200/40 via-blue-200/40 to-emerald-200/40 rounded-3xl blur-sm"></div>
             <div class="relative bg-white/85 backdrop-blur-sm border border-slate-200/60 p-8 rounded-3xl shadow-elegant">
                 <div class="flex items-center justify-between mb-8">
-                    <h4 class="text-2xl font-bold bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent">
+                    <h4 class="text-2xl font-light bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent">
                         Analytics Overview
                     </h4>
                     <div class="flex space-x-3">
@@ -156,8 +156,13 @@
                         <div class="w-2 h-2 bg-emerald-400 rounded-full animate-gentle-pulse" style="animation-delay: 0.6s;"></div>
                     </div>
                 </div>
+
+                {{-- Grafik Chart --}}
                 <div class="relative w-full max-w-4xl mx-auto h-[400px] p-6 bg-gradient-to-br from-slate-50/80 to-white rounded-2xl border border-slate-100">
-                    <canvas id="statistikChart"></canvas>
+                    <canvas id="statistikChart"
+                            data-jumlah-keluarga="{{ $jumlahKeluarga ?? 0 }}"
+                            data-jumlah-diskusi="{{ $jumlahDiskusi ?? 0 }}">
+                    </canvas>
                 </div>
             </div>
         </div>
@@ -166,7 +171,7 @@
     {{-- Section: Quick Actions --}}
     <section class="py-6 px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="flex items-center mb-8">
-            <h3 class="text-2xl font-semibold bg-gradient-to-r from-slate-600 to-emerald-600 bg-clip-text text-transparent mr-6">
+            <h3 class="text-2xl font-light bg-gradient-to-r from-slate-600 to-emerald-600 bg-clip-text text-transparent mr-6">
                 Quick Actions
             </h3>
             <div class="flex-1 h-px bg-gradient-to-r from-slate-300/50 to-transparent"></div>
@@ -180,7 +185,7 @@
                         <div class="text-3xl transform group-hover:scale-110 transition-transform duration-300">🏠</div>
                         <div>
                             <div class="font-medium text-lg text-gray-800">Kelola Keluarga</div>
-                            <div class="text-blue-600 text-sm font-semibold">Fitur Manajemen Keluarga</div>
+                            <div class="text-blue-600 text-sm font-light">Fitur Manajemen Keluarga</div>
                         </div>
                     </div>
                     <div class="mt-6 h-1 bg-slate-100 rounded-full overflow-hidden">
@@ -196,7 +201,7 @@
                         <div class="text-3xl transform group-hover:scale-110 transition-transform duration-300">💬</div>
                         <div>
                             <div class="font-medium text-lg text-gray-800">Kelola Diskusi</div>
-                            <div class="text-emerald-600 text-sm font-semibold">Fitur Diskusi Khusus Admin</div>
+                            <div class="text-emerald-600 text-sm font-light">Fitur Diskusi Khusus Admin</div>
                         </div>
                     </div>
                     <div class="mt-6 h-1 bg-slate-100 rounded-full overflow-hidden">
@@ -388,6 +393,8 @@
             return;
         }
 
+        const jumlahKeluarga = parseInt(canvas.dataset.jumlahKeluarga || '0', 10);
+        const jumlahDiskusi = parseInt(canvas.dataset.jumlahDiskusi || '0', 10);
         const ctx = canvas.getContext('2d');
         
         if (!ctx) {
@@ -401,8 +408,6 @@
         }
 
         // Data dari backend - pastikan ada fallback jika undefined
-        const jumlahKeluarga = {{ $jumlahKeluarga ?? 0 }};
-        const jumlahDiskusi = {{ $jumlahDiskusi ?? 0 }};
 
         console.log('Chart data:', { jumlahKeluarga, jumlahDiskusi });
 
