@@ -38,7 +38,7 @@
                 @foreach ($agamaList as $agama)
                     <option value="{{ $agama->id }}" 
                         {{ (isset($diskusi) && $agama->id == $diskusi->agama_id) ? 'selected' : '' }}>
-                        {{ $agama->nama }}
+                        {{ $agama->nama_agama }}
                     </option>
                 @endforeach
             </select>

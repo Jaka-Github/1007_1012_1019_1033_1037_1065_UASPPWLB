@@ -14,7 +14,7 @@
         <div class="bg-white shadow-md rounded-lg p-6 mb-4 border border-gray-200">
             <h4 class="text-xl font-bold text-gray-700">
                 {{ $d->topik }}
-                <span class="text-sm text-gray-500">({{ $d->agama->nama }})</span>
+                <span class="text-sm text-gray-500">({{ $d->agama->nama_agama }})</span>
             </h4>
             <p class="text-gray-600 mt-2">{{ $d->isi }}</p>
             <small class="text-sm text-gray-500 block mt-2">Oleh: {{ $d->user->name }}</small>

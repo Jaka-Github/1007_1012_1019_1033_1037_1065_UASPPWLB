@@ -42,7 +42,7 @@
                 <option value="">-- Pilih Agama --</option>
                 @foreach ($agamaList as $agama)
                     <option value="{{ $agama->id }}" {{ $agama->id == $diskusi->agama_id ? 'selected' : '' }}>
-                        {{ $agama->nama }}
+                        {{ $agama->nama_agama }}
                     </option>
                 @endforeach
             </select>
