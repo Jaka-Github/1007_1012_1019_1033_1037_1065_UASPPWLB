@@ -441,7 +441,7 @@
                         },
                         title: {
                             display: true,
-                            text: 'Dashboard Statistics',
+                            text: 'Statistik Dashboard',
                             color: '#475569',
                             font: {
                                 size: 18,
