@@ -123,8 +123,13 @@
                         <div class="w-2 h-2 bg-emerald-400 rounded-full animate-gentle-pulse" style="animation-delay: 0.6s;"></div>
                     </div>
                 </div>
+
+                {{-- Grafik Chart --}}
                 <div class="relative w-full max-w-4xl mx-auto h-[400px] p-6 bg-gradient-to-br from-slate-50/80 to-white rounded-2xl border border-slate-100">
-                    <canvas id="statistikChart"></canvas>
+                    <canvas id="statistikChart"
+                            data-jumlah-keluarga="{{ $jumlahKeluarga ?? 0 }}"
+                            data-jumlah-diskusi="{{ $jumlahDiskusi ?? 0 }}">
+                    </canvas>
                 </div>
             </div>
         </div>
@@ -354,7 +359,9 @@
             console.error('Canvas element not found');
             return;
         }
-
+        
+        const jumlahKeluarga = parseInt(canvas.dataset.jumlahKeluarga || '0', 10);
+        const jumlahDiskusi = parseInt(canvas.dataset.jumlahDiskusi || '0', 10);
         const ctx = canvas.getContext('2d');
         
         if (!ctx) {
@@ -368,8 +375,6 @@
         }
 
         // Data dari backend - pastikan ada fallback jika undefined
-        const jumlahKeluarga = {{ $jumlahKeluarga ?? 0 }};
-        const jumlahDiskusi = {{ $jumlahDiskusi ?? 0 }};
 
         console.log('Chart data:', { jumlahKeluarga, jumlahDiskusi });
 
