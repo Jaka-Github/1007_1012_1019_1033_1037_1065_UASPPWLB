@@ -18,38 +18,71 @@
 
     {{-- Section: Welcome Message --}}
     <section class="py-6 px-4 sm:px-6 lg:px-8 relative z-10">
+        {{-- Dynamic background overlay --}}
+        <div class="absolute inset-0 overflow-hidden rounded-3xl">
+            {{-- Main vibrant gradient background --}}
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-600 to-teal-500 opacity-90 animate-gradient rounded-3xl"></div>
+            
+            {{-- Overlay patterns for depth --}}
+            <div class="absolute inset-0 bg-gradient-to-tr from-pink-500/20 via-transparent to-yellow-400/20 rounded-3xl"></div>
+            
+            {{-- Floating geometric shapes --}}
+            <div class="absolute top-8 left-8 w-16 h-16 bg-white/10 rounded-full blur-xl animate-float"></div>
+            <div class="absolute top-12 right-12 w-12 h-12 bg-yellow-400/20 rounded-full blur-lg animate-float" style="animation-delay: -2s;"></div>
+            <div class="absolute bottom-8 left-1/4 w-20 h-20 bg-pink-500/15 rounded-full blur-2xl animate-float" style="animation-delay: -4s;"></div>
+            <div class="absolute bottom-6 right-1/3 w-14 h-14 bg-blue-400/20 rounded-full blur-xl animate-float" style="animation-delay: -1s;"></div>
+            
+            {{-- Subtle grid pattern overlay --}}
+            <div class="absolute inset-0 opacity-5 rounded-3xl">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="welcome-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="white" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#welcome-grid)" />
+                </svg>
+            </div>
+        </div>
+
         <div class="relative overflow-hidden">
-            <!-- Clean gradient background -->
-            <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 rounded-3xl"></div>
-            
-            <!-- Minimal border glow -->
-            <div class="absolute -inset-0.5 bg-gradient-to-r from-slate-200/40 via-blue-200/40 to-emerald-200/40 rounded-3xl blur-sm"></div>
-            
-            <!-- Content -->
-            <div class="relative bg-white/85 backdrop-blur-sm border border-slate-200/60 rounded-3xl p-8 shadow-elegant">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-400/60 via-blue-400/60 to-teal-400/60 rounded-3xl blur-sm"></div>
+            <div class="relative bg-white/20 backdrop-blur-lg border border-white/30 rounded-3xl p-8 shadow-elegant">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h3 class="text-3xl font-light mb-3 bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent">
-                            Welcome back, {{ Auth::user()->name }}
-                        </h3>
-                        <p class="text-gray-600 text-lg leading-relaxed font-light">
-                            You're logged in as 
-                            <span class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-r from-slate-100 to-blue-100 text-slate-700 ml-2 border border-slate-200/50">
-                                ADMIN
+                       
+                        <h3 class="text-3xl font-light mb-3 text-white drop-shadow-lg">
+                            Welcome back, 
+                            <span class="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent font-medium">
+                                {{ Auth::user()->name }}
                             </span>
+                        </h3>
+                        
+                        <p class="text-white/90 text-lg leading-relaxed font-light mb-2">
+                            You're logged in as 
+                            <strong class="inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-white border border-white/30 shadow-xl backdrop-blur-sm animate-gentle-pulse whitespace-nowrap ml-2">
+                                👑 ADMIN
+                            </strong>
                         </p>
-                        <p class="text-gray-500 mt-3 font-light">
+                        
+                        <p class="text-white/80 mt-3 font-light leading-relaxed">
                             Manage your platform with this clean and intuitive interface
                         </p>
                     </div>
+                    
+                    {{-- decorative element --}}
                     <div class="hidden md:block">
-                        <div class="relative">
-                            <div class="w-20 h-20 bg-gradient-to-br from-slate-200 to-blue-300 rounded-2xl flex items-center justify-center transform rotate-2 hover:rotate-3 transition-transform duration-500">
-                                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-elegant">
+                        <div class="relative animate-float">
+                            {{-- decorative container with enhanced styling --}}
+                            <div class="w-20 h-20 bg-gradient-to-br from-yellow-400/80 via-pink-500/80 to-purple-600/80 rounded-2xl flex items-center justify-center transform rotate-2 hover:rotate-3 transition-all duration-500 shadow-2xl backdrop-blur-sm border border-white/20">
+                                <div class="w-16 h-16 bg-white/90 rounded-xl flex items-center justify-center shadow-elegant backdrop-blur-sm">
                                     <span class="text-2xl">⭐</span>
                                 </div>
                             </div>
-                            <div class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full animate-gentle-pulse"></div>
+                            
+                            {{-- floating indicators --}}
+                            <div class="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full animate-gentle-pulse shadow-lg"></div>
+                            <div class="absolute -bottom-1 -left-1 w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-gentle-pulse opacity-80" style="animation-delay: -1s;"></div>
                         </div>
                     </div>
                 </div>
