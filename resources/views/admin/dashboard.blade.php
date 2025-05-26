@@ -52,21 +52,21 @@
                     <div>
                        
                         <h3 class="text-3xl font-light mb-3 text-white drop-shadow-lg">
-                            Welcome back, 
+                            Selamat datang, 
                             <span class="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent font-medium">
                                 {{ Auth::user()->name }}
                             </span>
                         </h3>
                         
                         <p class="text-white/90 text-lg leading-relaxed font-light mb-2">
-                            You're logged in as 
+                            Kamu login sebagai
                             <strong class="inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-white border border-white/30 shadow-xl backdrop-blur-sm animate-gentle-pulse whitespace-nowrap ml-2">
                                 👑 ADMIN
                             </strong>
                         </p>
                         
                         <p class="text-white/80 mt-3 font-light leading-relaxed">
-                            Manage your platform with this clean and intuitive interface
+                            Kelola platform pendikar dengan desain yang interaktif dan menawan
                         </p>
                     </div>
                     
@@ -148,7 +148,7 @@
             <div class="relative bg-white/85 backdrop-blur-sm border border-slate-200/60 p-8 rounded-3xl shadow-elegant">
                 <div class="flex items-center justify-between mb-8">
                     <h4 class="text-2xl font-light bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent">
-                        Analytics Overview
+                        Grafik Analitik
                     </h4>
                     <div class="flex space-x-3">
                         <div class="w-2 h-2 bg-blue-400 rounded-full animate-gentle-pulse"></div>
@@ -168,11 +168,11 @@
         </div>
     </section>
 
-    {{-- Section: Quick Actions --}}
+    {{-- Section: Aksi Cepat --}}
     <section class="py-6 px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="flex items-center mb-8">
             <h3 class="text-2xl font-light bg-gradient-to-r from-slate-600 to-emerald-600 bg-clip-text text-transparent mr-6">
-                Quick Actions
+                Aksi Cepat
             </h3>
             <div class="flex-1 h-px bg-gradient-to-r from-slate-300/50 to-transparent"></div>
         </div>
@@ -194,7 +194,7 @@
                 </div>
             </a>
 
-            <a href="#" class="group relative">
+            <a href="{{ route('diskusi.index') }}" class="group relative">
                 <div class="absolute -inset-0.5 bg-gradient-to-br from-emerald-200/50 to-slate-200/50 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
                 <div class="relative bg-gradient-to-br from-emerald-50/80 to-slate-50/80 backdrop-blur-sm border border-slate-200/50 text-gray-700 p-8 rounded-2xl hover:border-emerald-300/70 transition-all duration-300 transform group-hover:scale-[1.02] shadow-elegant hover:shadow-emerald">
                     <div class="flex items-center space-x-4">
