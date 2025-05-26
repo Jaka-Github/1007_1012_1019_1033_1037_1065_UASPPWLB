@@ -15,11 +15,17 @@ class Diskusi extends Model
         'topik',
         'isi',
         'user_id',
+        'agama_id',
     ];
 
     // Relasi: Diskusi dimiliki oleh satu User
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function agama()
+    {
+        return $this->belongsTo(Agama::class);
     }
 }
