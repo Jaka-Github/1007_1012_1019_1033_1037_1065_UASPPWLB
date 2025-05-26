@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\AnggotaController;
 use App\Http\Controllers\admin\KeluargaController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\User\AnggotaPendikarController;
+use App\Http\Controllers\Admin\DiskusiController;
 
 Route::get('/', function () {
     return redirect()->route('register');
@@ -46,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::put('/admin/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update']);
 Route::delete('/admin/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy']);
+Route::resource('diskusi', DiskusiController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';
 
