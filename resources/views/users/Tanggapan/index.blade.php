@@ -77,6 +77,9 @@
             </div>
         </div>
 
+        <br>
+        <br>
+
         {{-- Daftar Diskusi dengan Tanggapan --}}
         <div class="space-y-4">
             @forelse($diskusi as $d)
@@ -133,9 +136,6 @@
                 <div class="p-6 text-center text-sm text-gray-500">Belum ada diskusi tersedia.</div>
             @endforelse
         </div>
-
-
-
     </div>
 </div>
 
