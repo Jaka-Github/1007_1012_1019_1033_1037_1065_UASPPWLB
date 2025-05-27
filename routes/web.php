@@ -6,10 +6,10 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\admin\AnggotaController;
 use App\Http\Controllers\admin\KeluargaController;
-use App\Http\Controllers\Admin\StatisticController;
-use App\Http\Controllers\User\AnggotaPendikarController;
-use App\Http\Controllers\Admin\DiskusiController;
-use App\Http\Controllers\User\TanggapanController;
+use App\Http\Controllers\admin\StatisticController;
+use App\Http\Controllers\user\AnggotaPendikarController;
+use App\Http\Controllers\admin\DiskusiController;
+use App\Http\Controllers\user\TanggapanController;
 
 Route::get('/', function () {
     return redirect()->route('register');
@@ -51,14 +51,16 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route admin dengan middleware untuk memastikan hanya admin yang akses
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('keluarga', KeluargaController::class);
-    Route::resource('keluarga.anggota', AnggotaController::class);
-    Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
-    
-    // Pindahkan route update dan delete anggota ke dalam grup admin
+        Route::resource('keluarga.anggota', AnggotaController::class);
+        Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
+
+});
+
     Route::put('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update'])->name('keluarga.anggota.update');
     Route::delete('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy'])->name('keluarga.anggota.destroy');
-});
+
+
 
 require __DIR__.'/auth.php';
