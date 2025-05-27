@@ -35,7 +35,7 @@ class TanggapanController extends Controller
 
         Tanggapan::create([
             'diskusi_id' => $request->diskusi_id,
-            'user_id' => auth()->id(),
+            'user_id' => $request->user()->id,
             'isi' => $request->isi,
         ]);
 
@@ -50,10 +50,6 @@ class TanggapanController extends Controller
 
         $tanggapan = Tanggapan::findOrFail($id);
 
-        if ($tanggapan->user_id != auth()->id()) {
-            abort(403);
-        }
-
         $tanggapan->update(['isi' => $request->isi]);
 
         return back()->with('success', 'Tanggapan berhasil diperbarui.');
@@ -62,10 +58,6 @@ class TanggapanController extends Controller
     public function destroy($id)
     {
         $tanggapan = Tanggapan::findOrFail($id);
-
-        if ($tanggapan->user_id != auth()->id()) {
-            abort(403);
-        }
 
         $tanggapan->delete();
 
