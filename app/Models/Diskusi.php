@@ -28,4 +28,9 @@ class Diskusi extends Model
     {
         return $this->belongsTo(Agama::class);
     }
+
+     public function tanggapan()
+    {
+        return $this->hasMany(Tanggapan::class, 'diskusi_id', 'id');
+    }
 }
