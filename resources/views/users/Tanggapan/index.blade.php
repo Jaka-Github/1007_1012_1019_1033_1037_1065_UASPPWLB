@@ -81,59 +81,83 @@
         <br>
 
         {{-- Daftar Diskusi dengan Tanggapan --}}
-        <div class="space-y-4">
+        <div class="space-y-6">
             @forelse($diskusi as $d)
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-md font-bold text-gray-800 mb-1">{{ $d->topik }}</h3>
-                    <p class="text-sm text-gray-600 mb-2">{{ $d->isi }}</p>
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-2xl transition-all duration-300 group relative overflow-hidden">
+                    {{-- Badge Topik --}}
+                    <span class="absolute top-4 right-4 bg-blue-100 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full shadow group-hover:bg-blue-200 transition">
+                        #{{ Str::slug($d->topik, '_') }}
+                    </span>
+                    <h3 class="text-xl font-extrabold text-gray-800 mb-1 group-hover:text-blue-700 transition">{{ $d->topik }}</h3>
+                    <p class="text-base text-gray-700 mb-4">{{ $d->isi }}</p>
 
+                    {{-- Tanggapan --}}
                     @if($d->tanggapan->count())
-                        <ul class="ml-4 list-disc text-sm text-gray-700 space-y-1">
+                        <ul class="ml-2 list-none text-sm text-gray-700 space-y-3">
                             @foreach($d->tanggapan as $t)
-                                <li>
-                                    <span class="font-medium">{{ $t->user->name }}:</span> {{ $t->isi }}
-                                    <span class="text-gray-400 text-xs">({{ $t->created_at->diffForHumans() }})</span>
+                                <li class="bg-gray-50 rounded-lg px-3 py-2 shadow-sm flex items-start gap-2">
+                                    <div class="flex-shrink-0 mt-1">
+                                        <span class="inline-block w-8 h-8 rounded-full bg-blue-200 text-blue-800 font-bold flex items-center justify-center">
+                                            {{ strtoupper(substr($t->user->name, 0, 1)) }}
+                                        </span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="font-semibold text-blue-700">{{ $t->user->name }}</span>
+                                        <span class="text-gray-400 text-xs ml-2">({{ $t->created_at->diffForHumans() }})</span>
+                                        <div class="text-gray-800 mt-1">{{ $t->isi }}</div>
 
-                                    @auth
-                                        @if($t->user_id === auth()->id())
-                                            <div class="text-xs text-gray-500 space-x-2 mt-1">
-                                                {{-- Edit --}}
-                                                <button data-action="edit-tanggapan" data-id="{{ $t->id }}" data-isi="{{ $t->isi }}" class="btn-edit-tanggapan text-yellow-500 hover:underline">Edit</button>
-
-                                                {{-- Hapus --}}
-                                                <form action="{{ route('tanggapan.destroy', $t->id) }}" method="POST" class="inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-red-500 hover:underline">Hapus</button>
-                                                </form>
-                                            </div>
-                                        @endif
-                                    @endauth
+                                        @auth
+                                            @if($t->user_id === auth()->id())
+                                                <div class="text-xs text-gray-500 space-x-2 mt-1">
+                                                    {{-- Edit --}}
+                                                    <button data-action="edit-tanggapan" data-id="{{ $t->id }}" data-isi="{{ $t->isi }}" class="btn-edit-tanggapan text-yellow-600 hover:underline">Edit</button>
+                                                    {{-- Hapus --}}
+                                                    <form action="{{ route('tanggapan.destroy', $t->id) }}" method="POST" class="inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-red-500 hover:underline">Hapus</button>
+                                                    </form>
+                                                </div>
+                                            @endif
+                                        @endauth
+                                    </div>
                                 </li>
                             @endforeach
                         </ul>
                     @else
-                        <p class="text-sm text-gray-500 italic">Belum ada tanggapan.</p>
+                        <p class="text-sm text-gray-400 italic">Belum ada tanggapan. Jadilah yang pertama!</p>
                     @endif
 
                     @auth
-                        <button data-action="toggle-form" data-id="{{ $d->id }}" class="btn-toggle-form text-blue-500 text-sm mt-4 hover:underline">
-                            + Tambah Tanggapan
-                        </button>
+                        {{-- Tombol Tambah Tanggapan --}}
+                        <div class="flex justify-end mt-6">
+                            <button 
+                                data-action="toggle-form" 
+                                data-id="{{ $d->id }}" 
+                                class="btn-toggle-form flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold shadow-lg hover:scale-105 hover:from-blue-600 hover:to-blue-800 transition-all duration-200 focus:outline-none"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Tambah Tanggapan
+                            </button>
+                        </div>
 
                         {{-- Form tambah tanggapan --}}
-                        <form id="form-{{ $d->id }}" action="{{ route('tanggapan.store') }}" method="POST" class="hidden mt-2">
+                        <form id="form-{{ $d->id }}" action="{{ route('tanggapan.store') }}" method="POST" class="hidden mt-4 animate-fade-in">
                             @csrf
                             <input type="hidden" name="diskusi_id" value="{{ $d->id }}">
-                            <textarea name="isi" rows="2" class="w-full p-2 border rounded text-sm" placeholder="Tanggapan Anda..."></textarea>
-                            <button type="submit" class="mt-1 bg-blue-500 text-white px-3 py-1 text-sm rounded hover:bg-blue-600">
-                                Kirim
-                            </button>
+                            <textarea name="isi" rows="2" class="w-full p-3 border-2 border-blue-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Tulis tanggapan Anda di sini..."></textarea>
+                            <div class="flex justify-end mt-2">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-800 text-white px-5 py-2 rounded-lg shadow font-semibold transition">
+                                    Kirim
+                                </button>
+                            </div>
                         </form>
                     @endauth
                 </div>
             @empty
-                <div class="p-6 text-center text-sm text-gray-500">Belum ada diskusi tersedia.</div>
+                <div class="p-8 text-center text-lg text-gray-400 font-semibold">Belum ada diskusi tersedia.</div>
             @endforelse
         </div>
     </div>
