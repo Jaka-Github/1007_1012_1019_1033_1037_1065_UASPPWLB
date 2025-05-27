@@ -77,101 +77,114 @@
             </div>
         </div>
 
-        {{-- Daftar Tanggapan --}}
-        <div class="bg-white rounded-lg shadow">
+        {{-- Daftar Diskusi dengan Tanggapan --}}
+        <div class="bg-white rounded-lg shadow mb-6">
             <div class="px-6 py-4 border-b border-gray-200">
-                <h2 class="text-lg font-semibold text-gray-800">Semua Tanggapan</h2>
+                <h2 class="text-lg font-semibold text-gray-800">Diskusi & Tanggapan</h2>
             </div>
-            
-            @if($tanggapan->count() > 0)
-                <div class="divide-y divide-gray-200">
-                    @foreach($tanggapan as $item)
-                        <div class="p-6">
-                            <div class="flex items-start space-x-4">
-                                {{-- Avatar --}}
-                                <div class="flex-shrink-0">
-                                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                        <span class="text-white text-sm font-semibold">
-                                            {{ substr($item->user->name, 0, 1) }}
-                                        </span>
-                                    </div>
-                                </div>
-                                
-                                {{-- Content --}}
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-900">
-                                                {{ $item->user->name }}
-                                            </p>
-                                            <p class="text-sm text-gray-500">
-                                                {{ $item->created_at->format('d M Y, H:i') }}
-                                            </p>
-                                        </div>
-                                        
-                                        @if($item->user_id === auth()->id())
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                Tanggapan Saya
-                                            </span>
-                                        @endif
-                                    </div>
-                                    
-                                    <div class="mt-2">
-                                        <a href="{{ route('diskusi.show', $item->diskusi->id) }}" 
-                                        class="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                                        Re: {{ $item->diskusi->topik }}
-                                    </a>
-                                </div>
-                                
-                                <div class="mt-1 text-sm text-gray-600">
-                                    <strong>Diskusi:</strong> {{ Str::limit($item->diskusi->isi, 100) }}
-                                </div>
-                                
-                                <div class="mt-2">
-                                    <p class="text-gray-700">{{ $item->isi }}</p>
-                                </div>
 
+            @forelse($diskusi as $d)
+                <div class="p-6 border-b border-gray-100">
+                    <h3 class="text-md font-bold text-gray-800 mb-1">{{ $d->topik }}</h3>
+                    <p class="text-sm text-gray-600 mb-2">{{ Str::limit($d->isi, 100) }}</p>
 
-                                    
-                                    <div class="mt-3 flex items-center space-x-4">
-                                        <a href="{{ route('diskusi.show', $item->diskusi->id) }}" 
-                                           class="text-sm text-blue-600 hover:text-blue-800">
-                                            Lihat Diskusi
-                                        </a>
-                                        
-                                        @if($item->user_id === auth()->id())
-                                            <span class="text-gray-300">•</span>
-                                            <button class="text-sm text-red-600 hover:text-red-800">
-                                                Hapus
-                                            </button>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                    @if($d->tanggapan->count())
+                        <ul class="ml-4 list-disc text-sm text-gray-700 space-y-1">
+                            @foreach($d->tanggapan as $t)
+                                <li>
+                                    <span class="font-medium">{{ $t->user->name }}:</span> {{ $t->isi }}
+                                    <span class="text-gray-400 text-xs">({{ $t->created_at->diffForHumans() }})</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-sm text-gray-500 italic">Belum ada tanggapan.</p>
+                    @endif
                 </div>
-                
-                {{-- Pagination --}}
-                <div class="px-6 py-4 border-t border-gray-200">
-                    {{ $tanggapan->links() }}
-                </div>
-            @else
-                <div class="p-6 text-center">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                    </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada tanggapan</h3>
-                    <p class="mt-1 text-sm text-gray-500">Mulai diskusi dan berikan tanggapan pertama.</p>
-                    <div class="mt-6">
-                        <a href="{{ route('diskusi.index') }}" 
-                           class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                            Lihat Diskusi
-                        </a>
-                    </div>
-                </div>
-            @endif
+            @empty
+                <div class="p-6 text-center text-sm text-gray-500">Belum ada diskusi tersedia.</div>
+            @endforelse
         </div>
+        
+        @auth
+            <button onclick="toggleForm({{ $d->id }})" class="text-blue-500 text-sm mt-2 hover:underline">
+                + Tambah Tanggapan
+            </button>
+
+            {{-- Form tambah tanggapan --}}
+            <form id="form-{{ $d->id }}" action="{{ route('tanggapan.store') }}" method="POST" class="hidden mt-2">
+                @csrf
+                <input type="hidden" name="diskusi_id" value="{{ $d->id }}">
+                <textarea name="isi" rows="2" class="w-full p-2 border rounded text-sm" placeholder="Tanggapan Anda..."></textarea>
+                <button type="submit" class="mt-1 bg-blue-500 text-white px-3 py-1 text-sm rounded hover:bg-blue-600">
+                    Kirim
+                </button>
+            </form>
+
+            @foreach($d->tanggapan as $t)
+                <div class="ml-4 mt-2 border-l pl-4">
+                    <p class="text-sm">{{ $t->user->name }}: {{ $t->isi }}</p>
+
+                    @auth
+                        @if($t->user_id === auth()->id())
+                            <div class="text-xs text-gray-500 space-x-2 mt-1">
+                                {{-- Edit --}}
+                                <button onclick="editTanggapan({{ $t->id }}, '{{ $t->isi }}')" class="text-yellow-500 hover:underline">Edit</button>
+                                
+                                {{-- Hapus --}}
+                                <form action="{{ route('tanggapan.destroy', $t->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:underline">Hapus</button>
+                                </form>
+                            </div>
+                        @endif
+                    @endauth
+                </div>
+            @endforeach
+
+        @endauth
+
+
     </div>
 </div>
+
+<script>
+    function toggleForm(diskusiId) {
+        const form = document.getElementById('form-' + diskusiId);
+        form.classList.toggle('hidden');
+    }
+
+    function editTanggapan(id, isi) {
+        const newIsi = prompt("Edit tanggapan:", isi);
+        if (newIsi !== null) {
+            const form = document.createElement('form');
+            form.action = '/tanggapan/' + id;
+            form.method = 'POST';
+
+            const _token = document.createElement('input');
+            _token.type = 'hidden';
+            _token.name = '_token';
+            _token.value = '{{ csrf_token() }}';
+
+            const _method = document.createElement('input');
+            _method.type = 'hidden';
+            _method.name = '_method';
+            _method.value = 'PUT';
+
+            const isiInput = document.createElement('input');
+            isiInput.type = 'hidden';
+            isiInput.name = 'isi';
+            isiInput.value = newIsi;
+
+            form.appendChild(_token);
+            form.appendChild(_method);
+            form.appendChild(isiInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
+
 @endsection

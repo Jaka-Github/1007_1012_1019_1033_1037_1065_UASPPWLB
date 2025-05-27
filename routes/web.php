@@ -40,13 +40,8 @@ Route::middleware('auth')->group(function () {
 
     // Route tanggapan
     Route::get('/tanggapan', [TanggapanController::class, 'index'])->name('tanggapan.index');
-    Route::get('/diskusi/{diskusi}/tanggapan/create', [TanggapanController::class, 'create'])->name('tanggapan.create');
-    Route::post('/tanggapan', [TanggapanController::class, 'store'])->name('tanggapan.store');
-    
-    // Tambahkan route untuk edit dan delete tanggapan jika diperlukan
-    Route::get('/tanggapan/{tanggapan}/edit', [TanggapanController::class, 'edit'])->name('tanggapan.edit');
-    Route::put('/tanggapan/{tanggapan}', [TanggapanController::class, 'update'])->name('tanggapan.update');
-    Route::delete('/tanggapan/{tanggapan}', [TanggapanController::class, 'destroy'])->name('tanggapan.destroy');
+    Route::resource('tanggapan', TanggapanController::class)->except(['show']);
+
 
 });
 
