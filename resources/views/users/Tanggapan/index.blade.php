@@ -78,15 +78,11 @@
         </div>
 
         {{-- Daftar Diskusi dengan Tanggapan --}}
-        <div class="bg-white rounded-lg shadow mb-6">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h2 class="text-lg font-semibold text-gray-800">Diskusi & Tanggapan</h2>
-            </div>
-
+        <div class="space-y-4">
             @forelse($diskusi as $d)
-                <div class="p-6 border-b border-gray-100">
+                <div class="bg-white rounded-lg shadow p-6">
                     <h3 class="text-md font-bold text-gray-800 mb-1">{{ $d->topik }}</h3>
-                    <p class="text-sm text-gray-600 mb-2">{{ ($d->isi) }}</p>
+                    <p class="text-sm text-gray-600 mb-2">{{ $d->isi }}</p>
 
                     @if($d->tanggapan->count())
                         <ul class="ml-4 list-disc text-sm text-gray-700 space-y-1">
@@ -94,58 +90,50 @@
                                 <li>
                                     <span class="font-medium">{{ $t->user->name }}:</span> {{ $t->isi }}
                                     <span class="text-gray-400 text-xs">({{ $t->created_at->diffForHumans() }})</span>
+
+                                    @auth
+                                        @if($t->user_id === auth()->id())
+                                            <div class="text-xs text-gray-500 space-x-2 mt-1">
+                                                {{-- Edit --}}
+                                                <button data-action="edit-tanggapan" data-id="{{ $t->id }}" data-isi="{{ $t->isi }}" class="btn-edit-tanggapan text-yellow-500 hover:underline">Edit</button>
+
+                                                {{-- Hapus --}}
+                                                <form action="{{ route('tanggapan.destroy', $t->id) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500 hover:underline">Hapus</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    @endauth
                                 </li>
                             @endforeach
                         </ul>
                     @else
                         <p class="text-sm text-gray-500 italic">Belum ada tanggapan.</p>
                     @endif
+
+                    @auth
+                        <button data-action="toggle-form" data-id="{{ $d->id }}" class="btn-toggle-form text-blue-500 text-sm mt-4 hover:underline">
+                            + Tambah Tanggapan
+                        </button>
+
+                        {{-- Form tambah tanggapan --}}
+                        <form id="form-{{ $d->id }}" action="{{ route('tanggapan.store') }}" method="POST" class="hidden mt-2">
+                            @csrf
+                            <input type="hidden" name="diskusi_id" value="{{ $d->id }}">
+                            <textarea name="isi" rows="2" class="w-full p-2 border rounded text-sm" placeholder="Tanggapan Anda..."></textarea>
+                            <button type="submit" class="mt-1 bg-blue-500 text-white px-3 py-1 text-sm rounded hover:bg-blue-600">
+                                Kirim
+                            </button>
+                        </form>
+                    @endauth
                 </div>
             @empty
                 <div class="p-6 text-center text-sm text-gray-500">Belum ada diskusi tersedia.</div>
             @endforelse
         </div>
-        
-        @auth
-            <button data-action="toggle-form" data-id="{{ $d->id }}" class="btn-toggle-form text-blue-500 text-sm mt-2 hover:underline">
-                + Tambah Tanggapan
-            </button>
 
-            {{-- Form tambah tanggapan --}}
-            <form id="form-{{ $d->id }}" action="{{ route('tanggapan.store') }}" method="POST" class="hidden mt-2">
-                @csrf
-                <input type="hidden" name="diskusi_id" value="{{ $d->id }}">
-                <textarea name="isi" rows="2" class="w-full p-2 border rounded text-sm" placeholder="Tanggapan Anda..."></textarea>
-                <button type="submit" class="mt-1 bg-blue-500 text-white px-3 py-1 text-sm rounded hover:bg-blue-600">
-                    Kirim
-                </button>
-            </form>
-
-            @foreach($d->tanggapan as $t)
-                <div class="ml-4 mt-2 border-l pl-4">
-                    <p class="text-sm">{{ $t->user->name }}: {{ $t->isi }}</p>
-
-                    @auth
-                        @if($t->user_id === auth()->id())
-                            <div class="text-xs text-gray-500 space-x-2 mt-1">
-                                {{-- Edit --}}
-                                <button data-action="edit-tanggapan" data-id="{{ $t->id }}" data-isi="{{ $t->isi }}" class="btn-edit-tanggapan text-yellow-500 hover:underline">
-                                    Edit
-                                </button>
-                                
-                                {{-- Hapus --}}
-                                <form action="{{ route('tanggapan.destroy', $t->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:underline">Hapus</button>
-                                </form>
-                            </div>
-                        @endif
-                    @endauth
-                </div>
-            @endforeach
-
-        @endauth
 
 
     </div>
