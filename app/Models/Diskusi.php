@@ -29,8 +29,10 @@ class Diskusi extends Model
         return $this->belongsTo(Agama::class);
     }
 
-     public function tanggapan()
+    // di model Diskusi
+    public function tanggapan()
     {
-        return $this->hasMany(Tanggapan::class, 'diskusi_id', 'id');
+        return $this->hasMany(Tanggapan::class);
     }
+
 }

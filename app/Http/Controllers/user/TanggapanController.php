@@ -15,25 +15,17 @@ class TanggapanController extends Controller
      */
     public function index()
     {
-        $tanggapan = Tanggapan::with(['user', 'diskusi'])
-            ->latest()
-            ->paginate(10);
-            
-        return view('users.tanggapan.index', compact('tanggapan'));
+        // Ambil semua tanggapan dan relasi terkait
+        $tanggapan = Tanggapan::with(['user', 'diskusi'])->latest()->paginate(10);
+
+        // Ambil diskusi juga jika dibutuhkan untuk daftar diskusi aktif
+        $diskusi = Diskusi::with(['user', 'agama'])->latest()->paginate(10);
+
+        return view('users.tanggapan.index', compact('tanggapan', 'diskusi'));
     }
 
-    /**
-     * Menampilkan form untuk membuat tanggapan baru
-     */
-    public function create($diskusi_id)
-    {
-        $diskusi = Diskusi::with(['user', 'tanggapan.user'])->findOrFail($diskusi_id);
-        return view('tanggapan.create', compact('diskusi'));
-    }
 
-    /**
-     * Menyimpan tanggapan baru ke database
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -43,10 +35,41 @@ class TanggapanController extends Controller
 
         Tanggapan::create([
             'diskusi_id' => $request->diskusi_id,
-            'user_id' => Auth::id(),
+            'user_id' => auth()->id(),
             'isi' => $request->isi,
         ]);
 
-        return redirect()->back()->with('success', 'Tanggapan berhasil dikirim.');
+        return back()->with('success', 'Tanggapan berhasil ditambahkan.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'isi' => 'required|string|max:1000',
+        ]);
+
+        $tanggapan = Tanggapan::findOrFail($id);
+
+        if ($tanggapan->user_id != auth()->id()) {
+            abort(403);
+        }
+
+        $tanggapan->update(['isi' => $request->isi]);
+
+        return back()->with('success', 'Tanggapan berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $tanggapan = Tanggapan::findOrFail($id);
+
+        if ($tanggapan->user_id != auth()->id()) {
+            abort(403);
+        }
+
+        $tanggapan->delete();
+
+        return back()->with('success', 'Tanggapan berhasil dihapus.');
+    }
+
 }
