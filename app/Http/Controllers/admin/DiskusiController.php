@@ -23,7 +23,6 @@ class DiskusiController extends Controller
         return view('admin.diskusi.create', compact('agamaList'));
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -42,17 +41,18 @@ class DiskusiController extends Controller
         return redirect()->route('diskusi.index')->with('success', 'Diskusi berhasil dibuat.');
     }
 
-    public function show(Diskusi $diskusi)
+    public function show($id)
     {
+        $diskusi = Diskusi::with(['user', 'tanggapan.user'])->findOrFail($id);
         return view('admin.diskusi.show', compact('diskusi'));
     }
 
     public function edit($id)
     {
         $diskusi = Diskusi::findOrFail($id);
-        $agamaList = Agama::all(); // <- ini penting!
+        $agamaList = Agama::all();
 
-    return view('admin.diskusi.edit', compact('diskusi', 'agamaList'));
+        return view('admin.diskusi.edit', compact('diskusi', 'agamaList'));
     }
 
     public function update(Request $request, Diskusi $diskusi)

@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\KeluargaController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\User\AnggotaPendikarController;
 use App\Http\Controllers\Admin\DiskusiController;
+use App\Http\Controllers\User\TanggapanController;
 
 Route::get('/', function () {
     return redirect()->route('register');
@@ -30,28 +31,34 @@ Route::middleware('auth')->group(function () {
 
     // Route logout
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-});
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('keluarga', KeluargaController::class);
-        Route::resource('keluarga.anggota', AnggotaController::class);
-        Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
-
-
-});
-
-//route untuk lihat anggota pendikar
-Route::middleware(['auth'])->group(function () {
+    // Route untuk lihat anggota pendikar
     Route::get('/anggota-keluarga', [AnggotaPendikarController::class, 'index'])->name('anggota.index');
+
+    // Route diskusi - pindahkan ke dalam middleware auth
+    Route::resource('diskusi', DiskusiController::class);
+
+    // Route tanggapan
+    Route::get('/tanggapan', [TanggapanController::class, 'index'])->name('tanggapan.index');
+    Route::get('/diskusi/{diskusi}/tanggapan/create', [TanggapanController::class, 'create'])->name('tanggapan.create');
+    Route::post('/tanggapan', [TanggapanController::class, 'store'])->name('tanggapan.store');
+    
+    // Tambahkan route untuk edit dan delete tanggapan jika diperlukan
+    Route::get('/tanggapan/{tanggapan}/edit', [TanggapanController::class, 'edit'])->name('tanggapan.edit');
+    Route::put('/tanggapan/{tanggapan}', [TanggapanController::class, 'update'])->name('tanggapan.update');
+    Route::delete('/tanggapan/{tanggapan}', [TanggapanController::class, 'destroy'])->name('tanggapan.destroy');
+
 });
 
-Route::put('/admin/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update']);
-Route::delete('/admin/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy']);
-Route::resource('diskusi', DiskusiController::class)->middleware('auth');
+// Route admin dengan middleware untuk memastikan hanya admin yang akses
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::resource('keluarga', KeluargaController::class);
+    Route::resource('keluarga.anggota', AnggotaController::class);
+    Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
+    
+    // Pindahkan route update dan delete anggota ke dalam grup admin
+    Route::put('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update'])->name('keluarga.anggota.update');
+    Route::delete('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy'])->name('keluarga.anggota.destroy');
+});
 
 require __DIR__.'/auth.php';
-
-
-
-
-
