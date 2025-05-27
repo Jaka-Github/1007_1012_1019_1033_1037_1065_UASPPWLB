@@ -68,7 +68,7 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Diskusi Aktif</p>
+                        <p class="text-sm font-medium text-gray-600">Diskusi Ditanggapi</p>
                         <p class="text-2xl font-semibold text-gray-900">
                             {{ $tanggapan->pluck('diskusi_id')->unique()->count() }}
                         </p>
@@ -86,7 +86,7 @@
             @forelse($diskusi as $d)
                 <div class="p-6 border-b border-gray-100">
                     <h3 class="text-md font-bold text-gray-800 mb-1">{{ $d->topik }}</h3>
-                    <p class="text-sm text-gray-600 mb-2">{{ Str::limit($d->isi, 100) }}</p>
+                    <p class="text-sm text-gray-600 mb-2">{{ ($d->isi) }}</p>
 
                     @if($d->tanggapan->count())
                         <ul class="ml-4 list-disc text-sm text-gray-700 space-y-1">
@@ -107,7 +107,7 @@
         </div>
         
         @auth
-            <button onclick="toggleForm({{ $d->id }})" class="text-blue-500 text-sm mt-2 hover:underline">
+            <button data-action="toggle-form" data-id="{{ $d->id }}" class="btn-toggle-form text-blue-500 text-sm mt-2 hover:underline">
                 + Tambah Tanggapan
             </button>
 
@@ -129,7 +129,9 @@
                         @if($t->user_id === auth()->id())
                             <div class="text-xs text-gray-500 space-x-2 mt-1">
                                 {{-- Edit --}}
-                                <button onclick="editTanggapan({{ $t->id }}, '{{ $t->isi }}')" class="text-yellow-500 hover:underline">Edit</button>
+                                <button data-action="edit-tanggapan" data-id="{{ $t->id }}" data-isi="{{ $t->isi }}" class="btn-edit-tanggapan text-yellow-500 hover:underline">
+                                    Edit
+                                </button>
                                 
                                 {{-- Hapus --}}
                                 <form action="{{ route('tanggapan.destroy', $t->id) }}" method="POST" class="inline">
@@ -150,41 +152,46 @@
 </div>
 
 <script>
-    function toggleForm(diskusiId) {
-        const form = document.getElementById('form-' + diskusiId);
-        form.classList.toggle('hidden');
-    }
 
-    function editTanggapan(id, isi) {
-        const newIsi = prompt("Edit tanggapan:", isi);
-        if (newIsi !== null) {
-            const form = document.createElement('form');
-            form.action = '/tanggapan/' + id;
-            form.method = 'POST';
+    document.addEventListener('DOMContentLoaded', () => {
+        // Event Delegation
+        document.body.addEventListener('click', function(e) {
+            // Tambah Tanggapan
+            if (e.target.matches('[data-action="toggle-form"]')) {
+                const id = e.target.getAttribute('data-id');
+                const form = document.getElementById(`form-${id}`);
+                if (form) form.classList.toggle('hidden');
+            }
 
-            const _token = document.createElement('input');
-            _token.type = 'hidden';
-            _token.name = '_token';
-            _token.value = '{{ csrf_token() }}';
+            // Edit Tanggapan
+            if (e.target.matches('[data-action="edit-tanggapan"]')) {
+                const id = e.target.getAttribute('data-id');
+                const isi = e.target.getAttribute('data-isi');
 
-            const _method = document.createElement('input');
-            _method.type = 'hidden';
-            _method.name = '_method';
-            _method.value = 'PUT';
-
-            const isiInput = document.createElement('input');
-            isiInput.type = 'hidden';
-            isiInput.name = 'isi';
-            isiInput.value = newIsi;
-
-            form.appendChild(_token);
-            form.appendChild(_method);
-            form.appendChild(isiInput);
-
-            document.body.appendChild(form);
-            form.submit();
-        }
-    }
+                // Tampilkan form popup atau inline form (contoh sederhana)
+                const existingForm = document.getElementById(`edit-form-${id}`);
+                if (existingForm) {
+                    existingForm.classList.remove('hidden');
+                    existingForm.querySelector('textarea').value = isi;
+                } else {
+                    const container = e.target.closest('div');
+                    const form = document.createElement('form');
+                    form.id = `edit-form-${id}`;
+                    form.method = 'POST';
+                    form.action = `/tanggapan/${id}`;
+                    form.innerHTML = `
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_method" value="PUT">
+                        <textarea name="isi" rows="2" class="w-full p-2 border rounded text-sm">${isi}</textarea>
+                        <button type="submit" class="mt-1 bg-green-500 text-white px-3 py-1 text-sm rounded hover:bg-green-600">
+                            Update
+                        </button>
+                    `;
+                    container.appendChild(form);
+                }
+            }
+        });
+    });
 </script>
 
 @endsection
