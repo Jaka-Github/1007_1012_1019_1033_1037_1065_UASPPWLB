@@ -17,13 +17,13 @@ class AgamaSeeder extends Seeder
             'Budha',
             'Konghucu',
             'Katolik',
-            'Kepercayaan',
         ];
 
         foreach ($agamas as $nama) {
             Agama::firstOrCreate(['nama_agama' => $nama]);
         }
     }
+    
 }
 
 
