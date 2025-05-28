@@ -61,9 +61,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Statistik untuk admin
     Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
 
-    // Pindahkan route update dan delete anggota ke dalam grup admin
-    Route::put('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update'])->name('keluarga.anggota.update');
-    Route::delete('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy'])->name('keluarga.anggota.destroy');
+
 });
+
+Route::put('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update'])->name('keluarga.anggota.update');
+Route::delete('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy'])->name('keluarga.anggota.destroy');
 
 require __DIR__.'/auth.php';
