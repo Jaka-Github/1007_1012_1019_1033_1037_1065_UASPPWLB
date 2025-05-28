@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-// Route admin dengan middleware untuk memastikan hanya admin yang akses
+// Route admin untuk Kelola Keluarga
 Route::prefix('admin')->name('admin.')->group(function () {
     // Kelola Keluarga Pendikar
     Route::resource('keluarga', KeluargaController::class);
