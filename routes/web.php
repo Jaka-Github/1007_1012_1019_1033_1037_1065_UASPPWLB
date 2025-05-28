@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
         }
 
         return $user->role === 'admin'
-            ? redirect()->route('admin.statistik')
+            ? redirect()->route('admin.dashboard')
             : app(DashboardController::class)->index();
     })->name('dashboard');
 
@@ -65,7 +65,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('diskusi', DiskusiController::class);
 
     // Statistik untuk admin
-    Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
+    Route::get('/dashboard', [StatisticController::class, 'index'])->name('dashboard');
 
 
 });
