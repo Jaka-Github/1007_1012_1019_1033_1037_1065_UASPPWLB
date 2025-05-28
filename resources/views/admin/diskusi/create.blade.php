@@ -16,7 +16,7 @@
         <!-- Form Card -->
         <div class="bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl p-8 border border-gray-100">
             <form method="POST" 
-                action="{{ isset($diskusi) ? route('diskusi.update', $diskusi->id) : route('diskusi.store') }}"
+                action="{{ isset($diskusi) ? route('admin.diskusi.update', $diskusi->id) : route('admin.diskusi.store') }}"
                 class="space-y-6">
                 @csrf
                 @if(isset($diskusi)) @method('PUT') @endif
@@ -102,7 +102,7 @@
 
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-100">
-                    <a href="{{ route('diskusi.index') }}"
+                    <a href="{{ route('admin.diskusi.index') }}"
                        class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 font-medium">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>

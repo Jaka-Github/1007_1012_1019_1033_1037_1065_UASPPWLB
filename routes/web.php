@@ -43,8 +43,6 @@ Route::middleware('auth')->group(function () {
     // Route untuk lihat anggota pendikar
     Route::get('/anggota-keluarga', [AnggotaPendikarController::class, 'index'])->name('anggota.index');
 
-    // Route diskusi - pindahkan ke dalam middleware auth
-    Route::resource('diskusi', DiskusiController::class);
 
     // Route tanggapan
     Route::get('/tanggapan', [TanggapanController::class, 'index'])->name('tanggapan.index');
@@ -55,13 +53,16 @@ Route::middleware('auth')->group(function () {
 
 });
 
-// Route admin untuk Kelola Keluarga
-Route::prefix('admin')->name('admin.')->group(function () {
+// Route admin 
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     // Kelola Keluarga Pendikar
     Route::resource('keluarga', KeluargaController::class);
 
     // Kelola Anggota Keluarga
     Route::resource('keluarga.anggota', AnggotaController::class);
+
+    // Route diskusi - pindahkan ke dalam middleware auth
+    Route::resource('diskusi', DiskusiController::class);
 
     // Statistik untuk admin
     Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
@@ -69,7 +70,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 });
 
-Route::put('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update'])->name('keluarga.anggota.update');
-Route::delete('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy'])->name('keluarga.anggota.destroy');
 
 require __DIR__.'/auth.php';

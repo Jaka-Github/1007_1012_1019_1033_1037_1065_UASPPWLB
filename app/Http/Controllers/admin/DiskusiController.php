@@ -38,7 +38,7 @@ class DiskusiController extends Controller
             'agama_id' => $request->agama_id,
         ]);
 
-        return redirect()->route('diskusi.index')->with('success', 'Diskusi berhasil dibuat.');
+        return redirect()->route('admin.diskusi.index')->with('success', 'Diskusi berhasil dibuat.');
     }
 
     public function show($id)
@@ -65,12 +65,12 @@ class DiskusiController extends Controller
 
         $diskusi->update($request->only('topik', 'isi', 'agama_id'));
 
-        return redirect()->route('diskusi.index')->with('success', 'Diskusi berhasil diperbarui.');
+        return redirect()->route('admin.diskusi.index')->with('success', 'Diskusi berhasil diperbarui.');
     }
 
     public function destroy(Diskusi $diskusi)
     {
         $diskusi->delete();
-        return redirect()->route('diskusi.index')->with('success', 'Diskusi berhasil dihapus.');
+        return redirect()->route('admin.diskusi.index')->with('success', 'Diskusi berhasil dihapus.');
     }
 }

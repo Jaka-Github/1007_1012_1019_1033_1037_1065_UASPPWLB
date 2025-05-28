@@ -118,7 +118,7 @@
             </a>
 
             <!-- Card 2: Diskusi -->
-            <a href="{{ route('diskusi.index') }}" class="group relative">
+            <a href="{{ route('admin.diskusi.index') }}" class="group relative">
                 <div class="absolute -inset-0.5 bg-gradient-to-br from-emerald-200/50 to-slate-200/50 rounded-3xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                 <div class="relative bg-white/90 backdrop-blur-sm border border-slate-200/50 p-8 rounded-3xl hover:border-emerald-300/70 transition-all duration-300 transform group-hover:scale-[1.02] shadow-elegant hover:shadow-emerald">
                     <div class="flex items-center justify-between mb-6">
@@ -194,7 +194,7 @@
                 </div>
             </a>
 
-            <a href="{{ route('diskusi.index') }}" class="group relative">
+            <a href="{{ route('admin.diskusi.index') }}" class="group relative">
                 <div class="absolute -inset-0.5 bg-gradient-to-br from-emerald-200/50 to-slate-200/50 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
                 <div class="relative bg-gradient-to-br from-emerald-50/80 to-slate-50/80 backdrop-blur-sm border border-slate-200/50 text-gray-700 p-8 rounded-2xl hover:border-emerald-300/70 transition-all duration-300 transform group-hover:scale-[1.02] shadow-elegant hover:shadow-emerald">
                     <div class="flex items-center space-x-4">
