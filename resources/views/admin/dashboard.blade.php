@@ -16,7 +16,7 @@
         <div class="absolute top-1/2 left-1/2 w-32 h-32 bg-emerald-500/12 rounded-full blur-2xl animate-gentle-bounce"></div>
     </div>
 
-    {{-- Section: Welcome Message --}}
+   {{-- Section: Welcome Message --}}
     <section class="py-6 px-4 sm:px-6 lg:px-8 relative z-10">
         {{-- Dynamic background overlay --}}
         <div class="absolute inset-0 overflow-hidden rounded-3xl">
@@ -50,22 +50,22 @@
             <div class="relative bg-white/20 backdrop-blur-lg border border-white/30 rounded-3xl p-8 shadow-elegant">
                 <div class="flex items-center justify-between">
                     <div>
-                       
-                        <h3 class="text-3xl font-light mb-3 text-white drop-shadow-lg">
+                    
+                        <h3 class="text-3xl font-semibold mb-3 text-white drop-shadow-lg tracking-wide">
                             Selamat datang, 
-                            <span class="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent font-medium">
+                            <span class="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent font-bold">
                                 {{ Auth::user()->name }}
                             </span>
                         </h3>
                         
-                        <p class="text-white/90 text-lg leading-relaxed font-light mb-2">
+                        <p class="text-white/95 text-lg leading-relaxed font-medium mb-2">
                             Kamu login sebagai
-                            <strong class="inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-white border border-white/30 shadow-xl backdrop-blur-sm animate-gentle-pulse whitespace-nowrap ml-2">
+                            <strong class="inline-flex items-center px-5 py-2 rounded-full text-sm font-bold text-white border border-white/30 shadow-xl backdrop-blur-sm animate-gentle-pulse whitespace-nowrap ml-2">
                                 👑 ADMIN
                             </strong>
                         </p>
                         
-                        <p class="text-white/80 mt-3 font-light leading-relaxed">
+                        <p class="text-white/90 mt-3 font-medium leading-relaxed">
                             Kelola platform pendikar dengan desain yang interaktif dan menawan
                         </p>
                     </div>
@@ -185,7 +185,7 @@
                         <div class="text-3xl transform group-hover:scale-110 transition-transform duration-300">🏠</div>
                         <div>
                             <div class="font-medium text-lg text-gray-800">Kelola Keluarga</div>
-                            <div class="text-blue-600 text-sm font-light">Fitur Manajemen Keluarga</div>
+                            <div class="text-blue-600 text-sm font-medium">Fitur Manajemen Keluarga</div>
                         </div>
                     </div>
                     <div class="mt-6 h-1 bg-slate-100 rounded-full overflow-hidden">
@@ -201,7 +201,7 @@
                         <div class="text-3xl transform group-hover:scale-110 transition-transform duration-300">💬</div>
                         <div>
                             <div class="font-medium text-lg text-gray-800">Kelola Diskusi</div>
-                            <div class="text-emerald-600 text-sm font-light">Fitur Diskusi Khusus Admin</div>
+                            <div class="text-emerald-600 text-sm font-medium">Fitur Diskusi Khusus Admin</div>
                         </div>
                     </div>
                     <div class="mt-6 h-1 bg-slate-100 rounded-full overflow-hidden">
