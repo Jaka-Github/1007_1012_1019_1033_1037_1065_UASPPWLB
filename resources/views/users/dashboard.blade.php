@@ -36,17 +36,33 @@
     </div>
 
     {{-- Statistics Cards --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <!-- Anggota Keluarga -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Total Keluarga -->
         <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-shadow duration-300">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-blue-600 text-sm font-semibold uppercase tracking-wide">Anggota Keluarga</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-2">{{ $jumlahKeluarga ?? 0 }}</p>
-                    <p class="text-gray-500 text-sm mt-1">Total anggota terdaftar</p>
+                    <p class="text-blue-600 text-sm font-semibold uppercase tracking-wide">Total Keluarga</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">{{ $jumlahKeluarga }}</p>
+                    <p class="text-gray-500 text-sm mt-1">Keluarga terdaftar</p>
                 </div>
                 <div class="bg-blue-100 p-3 rounded-full">
                     <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2V7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Anggota -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-green-600 text-sm font-semibold uppercase tracking-wide">Total Anggota</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">{{ $jumlahAnggota }}</p>
+                    <p class="text-gray-500 text-sm mt-1">Anggota pendikar</p>
+                </div>
+                <div class="bg-green-100 p-3 rounded-full">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 515.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                 </div>
@@ -54,28 +70,28 @@
         </div>
 
         <!-- Jadwal Ibadah -->
-        <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-shadow duration-300">
+        <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500 hover:shadow-xl transition-shadow duration-300">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-green-600 text-sm font-semibold uppercase tracking-wide">Jadwal Ibadah</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-2">{{ $jumlahJadwal ?? 0 }}</p>
-                    <p class="text-gray-500 text-sm mt-1">Kegiatan mendatang</p>
+                    <p class="text-yellow-600 text-sm font-semibold uppercase tracking-wide">Jadwal Ibadah</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">{{ $jumlahJadwal }}</p>
+                    <p class="text-gray-500 text-sm mt-1">Kegiatan terjadwal</p>
                 </div>
-                <div class="bg-green-100 p-3 rounded-full">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-yellow-100 p-3 rounded-full">
+                    <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
                 </div>
             </div>
         </div>
 
-        <!-- Tanggapan -->
+        <!-- Tanggapan Anda -->
         <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500 hover:shadow-xl transition-shadow duration-300">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-purple-600 text-sm font-semibold uppercase tracking-wide">Tanggapan</p>
-                    <p class="text-3xl font-bold text-gray-900 mt-2">{{ $jumlahTanggapan ?? 0 }}</p>
-                    <p class="text-gray-500 text-sm mt-1">Tanggapan Anda</p>
+                    <p class="text-purple-600 text-sm font-semibold uppercase tracking-wide">Tanggapan Anda</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">{{ $jumlahTanggapan }}</p>
+                    <p class="text-gray-500 text-sm mt-1">Kontribusi diskusi</p>
                 </div>
                 <div class="bg-purple-100 p-3 rounded-full">
                     <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,16 +154,8 @@
                 <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                 </svg>
-                Statistik Aktivitas Anda
+                Statistik Data
             </h3>
-            <div class="flex space-x-2">
-                <button class="px-3 py-1 text-xs font-medium bg-indigo-100 text-indigo-700 rounded-full hover:bg-indigo-200 transition-colors duration-200">
-                    Minggu Ini
-                </button>
-                <button class="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors duration-200">
-                    Bulan Ini
-                </button>
-            </div>
         </div>
         <div class="relative h-[350px] w-full">
             <canvas id="userChart"></canvas>
@@ -171,22 +179,27 @@
         gradient2.addColorStop(1, 'rgba(16, 185, 129, 0.1)');
         
         const gradient3 = ctx.createLinearGradient(0, 0, 0, 300);
-        gradient3.addColorStop(0, 'rgba(139, 92, 246, 0.8)');
-        gradient3.addColorStop(1, 'rgba(139, 92, 246, 0.1)');
+        gradient3.addColorStop(0, 'rgba(245, 158, 11, 0.8)');
+        gradient3.addColorStop(1, 'rgba(245, 158, 11, 0.1)');
+        
+        const gradient4 = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient4.addColorStop(0, 'rgba(139, 92, 246, 0.8)');
+        gradient4.addColorStop(1, 'rgba(139, 92, 246, 0.1)');
 
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Keluarga', 'Jadwal Ibadah', 'Diskusi'],
+                labels: ['Keluarga', 'Anggota', 'Jadwal Ibadah', 'Tanggapan Anda'],
                 datasets: [{
-                    label: 'Aktivitas Anda',
+                    label: 'Jumlah Data',
                     data: [
-                        {{ $jumlahKeluarga ?? 12 }}, 
-                        {{ $jumlahJadwal ?? 5 }}, 
-                        {{ $jumlahTanggapan ?? 8 }}
+                        {{ $jumlahKeluarga }}, 
+                        {{ $jumlahAnggota }}, 
+                        {{ $jumlahJadwal }}, 
+                        {{ $jumlahTanggapan }}
                     ],
-                    backgroundColor: [gradient1, gradient2, gradient3],
-                    borderColor: ['#3b82f6', '#10b981', '#8b5cf6'],
+                    backgroundColor: [gradient1, gradient2, gradient3, gradient4],
+                    borderColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'],
                     borderWidth: 2,
                     borderRadius: 8,
                     borderSkipped: false,
@@ -237,7 +250,7 @@
                             color: 'rgba(107, 114, 128, 0.1)'
                         },
                         ticks: {
-                            stepSize: 5,
+                            stepSize: 1,
                             font: {
                                 size: 12
                             },

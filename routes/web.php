@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\StatisticController;
 use App\Http\Controllers\user\AnggotaPendikarController;
 use App\Http\Controllers\admin\DiskusiController;
 use App\Http\Controllers\user\TanggapanController;
+use App\Http\Controllers\User\DashboardController; // Tambahkan ini
 
 Route::get('/', function () {
     return redirect()->route('register');
@@ -17,11 +18,12 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
 
+    // Update route dashboard
     Route::get('/dashboard', function () {
         if (auth()->user()->role === 'admin') {
             return redirect()->route('admin.statistik');
         } else {
-            return view('users.dashboard');
+            return app(DashboardController::class)->index();
         }
     })->name('dashboard');
 
@@ -42,6 +44,10 @@ Route::middleware('auth')->group(function () {
     // Route tanggapan
     Route::get('/tanggapan', [TanggapanController::class, 'index'])->name('tanggapan.index');
     Route::resource('tanggapan', TanggapanController::class)->except(['show']);
+
+
+
+
 });
 
 // Route admin dengan middleware untuk memastikan hanya admin yang akses
