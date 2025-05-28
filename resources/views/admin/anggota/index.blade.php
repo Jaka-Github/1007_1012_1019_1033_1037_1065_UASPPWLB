@@ -27,7 +27,7 @@
         <table class="min-w-full bg-white">
             <thead>
                 <tr class="bg-gradient-to-r from-blue-500 to-blue-600 text-left">
-                    <th class="py-4 px-6 font-medium text-white rounded-tl-2xl">#</th>
+                    <th class="py-4 px-6 font-medium text-white rounded-tl-2xl">No</th>
                     <th class="py-4 px-6 font-medium text-white">Nama Anggota</th>
                     <th class="py-4 px-6 font-medium text-white">Umur</th>
                     <th class="py-4 px-6 font-medium text-white">User</th>
