@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
         }
     })->name('dashboard');
 
+    // Route untuk Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -41,21 +42,22 @@ Route::middleware('auth')->group(function () {
     // Route tanggapan
     Route::get('/tanggapan', [TanggapanController::class, 'index'])->name('tanggapan.index');
     Route::resource('tanggapan', TanggapanController::class)->except(['show']);
-
-
 });
 
 // Route admin dengan middleware untuk memastikan hanya admin yang akses
 Route::prefix('admin')->name('admin.')->group(function () {
+    // Kelola Keluarga Pendikar
     Route::resource('keluarga', KeluargaController::class);
-        Route::resource('keluarga.anggota', AnggotaController::class);
-        Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
 
-});
+    // Kelola Anggota Keluarga
+    Route::resource('keluarga.anggota', AnggotaController::class);
 
+    // Statistik untuk admin
+    Route::get('/statistik', [StatisticController::class, 'index'])->name('statistik');
+
+    // Pindahkan route update dan delete anggota ke dalam grup admin
     Route::put('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'update'])->name('keluarga.anggota.update');
     Route::delete('/keluarga/{keluarga}/anggota/{anggota}', [AnggotaController::class, 'destroy'])->name('keluarga.anggota.destroy');
-
-
+});
 
 require __DIR__.'/auth.php';
