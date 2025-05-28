@@ -12,7 +12,7 @@
                     <h1 class="text-4xl font-bold text-gray-800 mb-2">Forum Diskusi</h1>
                     <p class="text-gray-600">Bergabunglah dalam diskusi antaragama pendikar!</p>
                 </div>
-                <a href="{{ route('diskusi.create') }}"
+                <a href="{{ route('admin.diskusi.create') }}"
                    class="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
                     <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -72,7 +72,7 @@
                     <!-- Action Buttons -->
                     <div class="flex flex-wrap gap-3 pt-4 border-t border-gray-100">
                         
-                        <a href="{{ route('diskusi.edit', $d->id) }}"
+                        <a href="{{ route('admin.diskusi.edit', $d->id) }}"
                            class="flex items-center gap-2 bg-amber-50 hover:bg-amber-100 text-amber-600 px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -80,7 +80,7 @@
                             Edit
                         </a>
 
-                        <form action="{{ route('diskusi.destroy', $d->id) }}" method="POST" 
+                        <form action="{{ route('admin.diskusi.destroy', $d->id) }}" method="POST" 
                               onsubmit="return confirm('Yakin ingin menghapus diskusi ini? Tindakan ini tidak dapat dibatalkan.')"
                               class="inline">
                             @csrf
@@ -141,7 +141,7 @@
                     <p class="text-gray-500 mb-8 max-w-md mx-auto">
                         Mulai percakapan yang bermakna dengan komunitas pendikar. Bagikan pemikiran, ajukan pertanyaan, atau diskusikan topik yang menarik.
                     </p>
-                    <a href="{{ route('diskusi.create') }}"
+                    <a href="{{ route('admin.diskusi.create') }}"
                        class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
