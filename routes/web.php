@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\admin\AnggotaController;
@@ -20,11 +21,15 @@ Route::middleware('auth')->group(function () {
 
     // Update route dashboard
     Route::get('/dashboard', function () {
-        if (auth()->user()->role === 'admin') {
-            return redirect()->route('admin.statistik');
-        } else {
-            return app(DashboardController::class)->index();
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login');
         }
+
+        return $user->role === 'admin'
+            ? redirect()->route('admin.statistik')
+            : app(DashboardController::class)->index();
     })->name('dashboard');
 
     // Route untuk Profile
