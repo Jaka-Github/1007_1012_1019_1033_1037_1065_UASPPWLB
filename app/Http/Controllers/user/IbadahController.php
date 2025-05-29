@@ -51,6 +51,13 @@ class IbadahController extends Controller
 
     }
 
+        public function edit($id)
+    {
+        $plan = IbadahPlan::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        return view('users.ibadah.edit', compact('plan'));
+    }
+
+
     // ✏️ Update rencana ibadah
     public function update(Request $request, $id)
     {
@@ -67,11 +74,12 @@ class IbadahController extends Controller
 
         $plan->update($request->only(['title', 'category', 'target', 'duration']));
 
-        return redirect()->back()->with('success', 'Rencana ibadah berhasil diperbarui.');
+        return redirect()->route('ibadah.index')->with('success', 'Rencana ibadah berhasil diperbarui.');
     }
 
+
     // ❌ Hapus rencana ibadah
-    public function delete($id)
+    public function destroy($id)
     {
         $plan = IbadahPlan::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $plan->delete();
@@ -79,32 +87,7 @@ class IbadahController extends Controller
         return redirect()->back()->with('success', 'Rencana ibadah berhasil dihapus.');
     }
 
-    // ✅ Tambah log ibadah
-    public function storeLog(Request $request)
-    {
-        $request->validate([
-            'ibadah_plan_id' => 'required|exists:ibadah_plans,id',
-            'date' => 'required|date',
-            'status' => 'required|in:done,missed',
-            'notes' => 'nullable|string',
-        ]);
-
-        $plan = IbadahPlan::where('id', $request->ibadah_plan_id)
-                ->where('user_id', Auth::id())
-                ->firstOrFail();
-
-        IbadahLog::create([
-            'user_id' => Auth::id(),
-            'ibadah_plan_id' => $request->ibadah_plan_id,
-            'date' => $request->date,
-            'status' => $request->status,
-            'notes' => $request->notes,
-        ]);
-
-        return redirect()->back()->with('success', 'Log ibadah berhasil ditambahkan.');
-    }
-
-    public function progress()
+        public function progress()
     {
         $user = Auth::user();
         // Contoh: ambil data progress ibadah user
@@ -115,8 +98,27 @@ class IbadahController extends Controller
         return view('users.ibadah.progress', compact('plans'));
     }
 
+    // ✅ Tambah log ibadah
+    public function logIbadah(Request $request, $planId)
+    {
+        $request->validate([
+            'status' => 'required|in:done,missed',
+            'notes' => 'nullable|string',
+        ]);
 
-    // ✏️ Update log ibadah
+        $plan = IbadahPlan::where('id', $planId)->where('user_id', Auth::id())->firstOrFail();
+
+        IbadahLog::create([
+            'user_id' => Auth::id(),
+            'ibadah_plan_id' => $plan->id,
+            'date' => now()->toDateString(),
+            'status' => $request->status === 'done' ? 1 : 0, // simpan ke kolom 'status'
+            'notes' => $request->notes,
+        ]);
+
+        return redirect()->route('ibadah.index')->with('success', 'Log ibadah berhasil ditambahkan.');
+    }
+
     public function updateLog(Request $request, $id)
     {
         $log = IbadahLog::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
@@ -127,10 +129,15 @@ class IbadahController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        $log->update($request->only(['date', 'status', 'notes']));
+        $log->update([
+            'date' => $request->date,
+            'is_done' => $request->status === 'done' ? true : false,
+            'note' => $request->notes,
+        ]);
 
-        return redirect()->back()->with('success', 'Log ibadah berhasil diperbarui.');
+        return redirect()->route('ibadah.index')->with('success', 'Log ibadah berhasil diperbarui.');
     }
+
 
     // ❌ Hapus log ibadah
     public function deleteLog($id)
@@ -138,6 +145,6 @@ class IbadahController extends Controller
         $log = IbadahLog::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $log->delete();
 
-        return redirect()->back()->with('success', 'Log ibadah berhasil dihapus.');
+        return redirect()->route('ibadah.index')->with('success', 'Log ibadah berhasil dihapus.');
     }
 }

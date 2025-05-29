@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function () {
         // Log Ibadah
         Route::post('/{id}/log', [IbadahController::class, 'logIbadah'])->name('log'); // Update status harian
         Route::get('/progress', [IbadahController::class, 'progress'])->name('progress'); // View dashboard kemajuan
+        Route::delete('/log/{id}', [IbadahController::class, 'deleteLog'])->name('log.destroy');
+
+
     });
 });
 

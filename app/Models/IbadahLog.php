@@ -15,12 +15,12 @@ class IbadahLog extends Model
         'user_id',
         'ibadah_plan_id',
         'date',
-        'is_done',
-        'note',
+        'status',
+        'notes',
     ];
 
     protected $casts = [
-        'is_done' => 'boolean',
+        'status' => 'boolean',
         'date' => 'date',
     ];
 

@@ -32,11 +32,12 @@
                         $progressPercent = $totalLogs > 0 ? round(($doneLogs / $totalLogs) * 100) : 0;
                     @endphp
 
-                    <div class="w-full bg-gray-200 rounded-full h-6 mb-2 overflow-hidden">
+                    <div class="w-full bg-gray-300 rounded-full h-8 mb-4 overflow-hidden shadow-inner">
                         <div 
                             x-data="{ width: '{{ $progressPercent }}%' }"
                             x-bind:style="'width: ' + width"
-                            class="bg-green-500 h-6 text-white flex items-center justify-center font-semibold transition-all duration-500"
+                            class="bg-gradient-to-r from-green-400 via-green-500 to-green-600 h-8 text-white flex items-center justify-center font-semibold text-lg shadow-lg transition-all duration-700 ease-in-out"
+                            style="min-width: 40px;"
                         >
                             {{ $progressPercent }}%
                         </div>
