@@ -13,12 +13,12 @@ class IbadahTrackerController extends Controller
     public function index()
     {
         $plans = IbadahPlan::where('user_id', Auth::id())->with('logs')->get();
-        return view('user.ibadah.index', compact('plans'));
+        return view('users.ibadah.index', compact('plans'));
     }
 
     public function createPlan()
     {
-        return view('user.ibadah.create-plan');
+        return view('users.ibadah.create-plan');
     }
 
     public function storePlan(Request $request)
@@ -40,13 +40,13 @@ class IbadahTrackerController extends Controller
             'end_date' => $request->end_date,
         ]);
 
-        return redirect()->route('user.ibadah.index')->with('success', 'Rencana ibadah berhasil ditambahkan!');
+        return redirect()->route('users.ibadah.index')->with('success', 'Rencana ibadah berhasil ditambahkan!');
     }
 
     public function logForm($planId)
     {
         $plan = IbadahPlan::findOrFail($planId);
-        return view('user.ibadah.log', compact('plan'));
+        return view('users.ibadah.log', compact('plan'));
     }
 
     public function storeLog(Request $request, $planId)
@@ -65,6 +65,6 @@ class IbadahTrackerController extends Controller
             'note' => $request->note,
         ]);
 
-        return redirect()->route('user.ibadah.index')->with('success', 'Catatan ibadah berhasil ditambahkan.');
+        return redirect()->route('users.ibadah.index')->with('success', 'Catatan ibadah berhasil ditambahkan.');
     }
 }

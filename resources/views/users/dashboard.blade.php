@@ -122,7 +122,7 @@
                     <p class="text-blue-700 text-sm">Kelola data anggota keluarga Anda</p>
                 </div>
             </a>
-            <a href="#" class="flex items-center p-4 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 group transition-colors duration-200">
+            <a href="{{ route('ibadah.index') }}" class="flex items-center p-4 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 group transition-colors duration-200">
                 <div class="bg-green-500 p-2 rounded-lg mr-4 group-hover:bg-green-600 transition-colors">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path d="M8 7V3m8 4V3M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>

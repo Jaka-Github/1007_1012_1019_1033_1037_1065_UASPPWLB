@@ -16,17 +16,25 @@ class IbadahController extends Controller
         $user = Auth::user();
         $plans = IbadahPlan::where('user_id', $user->id)->with('logs')->get();
 
-        return view('user.ibadah.index', compact('plans'));
+        return view('users.ibadah.index', compact('plans'));
     }
 
+    public function create()
+    {
+        return view('users.ibadah.create');
+    }
+
+
     // ➕ Tambah rencana ibadah baru
-    public function storePlan(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string',
             'target' => 'nullable|string',
             'duration' => 'nullable|string',
+             'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
         IbadahPlan::create([
@@ -35,13 +43,16 @@ class IbadahController extends Controller
             'category' => $request->category,
             'target' => $request->target,
             'duration' => $request->duration,
+            'start_date' => $request->start_date,  
+            'end_date' => $request->end_date,
         ]);
 
-        return redirect()->back()->with('success', 'Rencana ibadah berhasil ditambahkan.');
+        return redirect()->route('ibadah.index')->with('success', 'Rencana ibadah berhasil ditambahkan.');
+
     }
 
     // ✏️ Update rencana ibadah
-    public function updatePlan(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $plan = IbadahPlan::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
@@ -50,6 +61,8 @@ class IbadahController extends Controller
             'category' => 'required|string',
             'target' => 'nullable|string',
             'duration' => 'nullable|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
         $plan->update($request->only(['title', 'category', 'target', 'duration']));
@@ -58,7 +71,7 @@ class IbadahController extends Controller
     }
 
     // ❌ Hapus rencana ibadah
-    public function deletePlan($id)
+    public function delete($id)
     {
         $plan = IbadahPlan::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $plan->delete();
@@ -90,6 +103,18 @@ class IbadahController extends Controller
 
         return redirect()->back()->with('success', 'Log ibadah berhasil ditambahkan.');
     }
+
+    public function progress()
+    {
+        $user = Auth::user();
+        // Contoh: ambil data progress ibadah user
+        $plans = IbadahPlan::where('user_id', $user->id)->with('logs')->get();
+
+        // Logika perhitungan progress bisa kamu tambahkan di sini
+
+        return view('users.ibadah.progress', compact('plans'));
+    }
+
 
     // ✏️ Update log ibadah
     public function updateLog(Request $request, $id)
