@@ -11,15 +11,15 @@ use App\Http\Controllers\admin\StatisticController;
 use App\Http\Controllers\user\AnggotaPendikarController;
 use App\Http\Controllers\admin\DiskusiController;
 use App\Http\Controllers\user\TanggapanController;
-use App\Http\Controllers\User\DashboardController; // Tambahkan ini
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\admin\IbadahTrackerController; // ✅ Admin (mentor)
+use App\Http\Controllers\user\IbadahController;          // ✅ User (mahasiswa)
 
 Route::get('/', function () {
     return redirect()->route('register');
 });
 
 Route::middleware('auth')->group(function () {
-
-    // Update route dashboard
     Route::get('/dashboard', function () {
         $user = Auth::user();
 
@@ -32,43 +32,60 @@ Route::middleware('auth')->group(function () {
             : app(DashboardController::class)->index();
     })->name('dashboard');
 
-    // Route untuk Profile
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Route logout
+    // Logout
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-    // Route untuk lihat anggota pendikar
+    // Anggota pendikar
     Route::get('/anggota-keluarga', [AnggotaPendikarController::class, 'index'])->name('anggota.index');
 
-
-    // Route tanggapan
+    // Tanggapan
     Route::get('/tanggapan', [TanggapanController::class, 'index'])->name('tanggapan.index');
     Route::resource('tanggapan', TanggapanController::class)->except(['show']);
 
+    // ✅ Route Ibadah Mahasiswa (IbadahController)
+    Route::prefix('ibadah')->name('ibadah.')->group(function () {
+        Route::get('/', [IbadahController::class, 'index'])->name('index');
+        Route::get('/create', [IbadahController::class, 'create'])->name('create');
+        Route::post('/', [IbadahController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [IbadahController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [IbadahController::class, 'update'])->name('update');
+        Route::delete('/{id}', [IbadahController::class, 'destroy'])->name('destroy');
 
-
-
+        // Log Ibadah
+        Route::post('/{id}/log', [IbadahController::class, 'logIbadah'])->name('log'); // Update status harian
+        Route::get('/progress', [IbadahController::class, 'progress'])->name('progress'); // View dashboard kemajuan
+    });
 });
 
-// Route admin 
+// ✅ Route admin
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    // Kelola Keluarga Pendikar
+    // Keluarga Pendikar
     Route::resource('keluarga', KeluargaController::class);
 
-    // Kelola Anggota Keluarga
+    // Anggota Keluarga
     Route::resource('keluarga.anggota', AnggotaController::class);
 
-    // Route diskusi - pindahkan ke dalam middleware auth
+    // Diskusi
     Route::resource('diskusi', DiskusiController::class);
 
-    // Statistik untuk admin
+    // Statistik
     Route::get('/dashboard', [StatisticController::class, 'index'])->name('dashboard');
 
+    // ✅ Ibadah Tracker untuk mentor/admin
+    Route::get('/ibadah-tracker', [IbadahTrackerController::class, 'index'])->name('ibadah.index');
+    Route::get('/ibadah-tracker/create', [IbadahTrackerController::class, 'create'])->name('ibadah.create');
+    Route::post('/ibadah-tracker', [IbadahTrackerController::class, 'store'])->name('ibadah.store');
+    Route::get('/ibadah-tracker/{id}/edit', [IbadahTrackerController::class, 'edit'])->name('ibadah.edit');
+    Route::put('/ibadah-tracker/{id}', [IbadahTrackerController::class, 'update'])->name('ibadah.update');
+    Route::delete('/ibadah-tracker/{id}', [IbadahTrackerController::class, 'destroy'])->name('ibadah.destroy');
 
+    // (Optional) Lihat Log Ibadah per user
+    Route::get('/ibadah-tracker/{id}/logs', [IbadahTrackerController::class, 'showLogs'])->name('ibadah.logs');
 });
-
 
 require __DIR__.'/auth.php';
