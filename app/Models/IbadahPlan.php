@@ -11,6 +11,7 @@ class IbadahPlan extends Model
 
     protected $table = 'ibadah_plans';
 
+    
     protected $fillable = [
         'user_id',
         'title',
@@ -18,6 +19,7 @@ class IbadahPlan extends Model
         'target',
         'start_date',
         'end_date',
+        'duration', // ✅ Tambahkan ini
     ];
 
     public function user()
