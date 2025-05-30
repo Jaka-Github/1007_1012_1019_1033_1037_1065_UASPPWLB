@@ -9,7 +9,13 @@
 
     @if($anggota->isEmpty())
         <div class="flex items-center justify-between bg-yellow-100 text-yellow-800 p-4 rounded mb-6">
-            <div>Belum ada anggota untuk keluarga ini.</div>
+            <div class="flex items-center space-x-2">
+                <!-- Icon Warning -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M4.93 19h14.14a2 2 0 001.82-2.77l-7.07-12a2 2 0 00-3.54 0l-7.07 12A2 2 0 004.93 19z" />
+                </svg>
+                <span>Belum ada anggota untuk keluarga ini.</span>
+            </div>
             <a href="{{ route('admin.keluarga.anggota.create', $keluarga->id) }}" 
                 class="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
                 + Tambah Anggota
@@ -18,10 +24,11 @@
     @else
     <div class="mb-6 flex justify-end">
         <a href="{{ route('admin.keluarga.anggota.create', $keluarga->id) }}" 
-           class="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+        class="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
             + Tambah Anggota
         </a>
     </div>
+
 
     <div class="overflow-x-auto shadow-2xl rounded-2xl">
         <table class="min-w-full bg-white">

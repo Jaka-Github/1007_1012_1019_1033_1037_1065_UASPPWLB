@@ -136,8 +136,8 @@
                 {{-- Tombol Kelola Anggota - Primary Action --}}
                 <a href="{{ route('admin.keluarga.anggota.index', $keluarga->id) }}" 
                    class="flex items-center text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M16 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 text-white">
+                        <path d="M8 1C6.103 1 4.5 2.603 4.5 4.5S6.103 8 8 8s3.5-1.603 3.5-3.5S9.897 1 8 1zM8 6.5c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zM3 14c0-.368-.297-.667-.667-.667H2.333c-.368 0-.667.299-.667.667v1.333c0 .368.299.667.667.667h.667c.368 0 .667-.299.667-.667V14zm10 0c0-.368-.297-.667-.667-.667h-.667c-.368 0-.667.299-.667.667v1.333c0 .368.299.667.667.667h.667c.368 0 .667-.299.667-.667V14zM8 9.5c-2.573 0-4.667 2.094-4.667 4.667v2.333h9.334V14.167c0-2.573-2.094-4.667-4.667-4.667zm-3.333 4.667c0-1.83 1.503-3.333 3.333-3.333s3.333 1.503 3.333 3.333v.666H4.667v-.666z"/>
                     </svg>
                     <span class="text-sm font-bold">Kelola Anggota</span>
                 </a>

@@ -36,8 +36,8 @@ class AnggotaController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'umur' => 'required|integer|min:0',
-            'jenis_kelamin' => 'nullable|string|in:Laki-laki,Perempuan',
-            'alamat' => 'nullable|string|max:255',
+            'jenis_kelamin' => 'required|string|in:Laki-laki,Perempuan',
+            'alamat' => 'required|string|max:255',
             'users_id'=> 'nullable|exists:user,id',
             'agama_id' => 'required|exists:agama,id',
         ]);
