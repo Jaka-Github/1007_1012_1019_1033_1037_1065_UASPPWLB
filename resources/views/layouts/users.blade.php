@@ -8,6 +8,19 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;     /* Full tinggi layar */
+            width: 16rem;      /* Sesuaikan dengan lebar sidebar */
+            z-index: 30;       /* Pastikan di atas konten lain */
+            background: #fff;  /* Atur sesuai tema */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow-y: auto;  /* Jika menu banyak, bisa discroll sendiri */
+        }
+
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen" x-data="{ sidebarOpen: true }" x-cloak>
@@ -29,7 +42,7 @@
     <!-- Sidebar -->
     <div class="flex">
         <div
-            class="fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0"
+            class="fixed top-0 left-0 h-screen w-64 z-30 bg-white shadow overflow-y-auto"
             :class="{ '-translate-x-full': !sidebarOpen, 'translate-x-0': sidebarOpen }"
         >
             <div class="flex flex-col h-full">
@@ -141,7 +154,7 @@
             </button>
 
             <!-- Main Content -->
-            <main class="flex-1 p-6 bg-gray-50">
+            <main class="flex-1 p-6 bg-gray-50 ml-64">
                 @yield('content')
             </main>
         </div>

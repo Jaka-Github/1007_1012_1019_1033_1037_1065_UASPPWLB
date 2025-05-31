@@ -29,8 +29,8 @@
     <!-- Sidebar -->
     <div class="flex">
         <div
-            class="fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0"
-            :class="{ '-translate-x-full': !sidebarOpen, 'translate-x-0': sidebarOpen }"
+           class="fixed top-0 left-0 h-screen w-64 z-30 bg-white shadow overflow-y-auto"
+           :class="{ '-translate-x-full': !sidebarOpen, 'translate-x-0': sidebarOpen }"
         >
             <div class="flex flex-col h-full">
                 <!-- Header -->
@@ -122,7 +122,7 @@
             </button>
 
             <!-- Main Content -->
-            <main class="flex-1 p-6 bg-gray-50">
+            <main class="flex-1 p-6 bg-gray-50 ml-64">
                 @yield('content')
             </main>
         </div>
