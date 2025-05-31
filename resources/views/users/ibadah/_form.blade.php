@@ -8,26 +8,33 @@
 @php
     $oldStart = old('start_date', $plan->start_date ?? '');
     $oldDuration = old('duration', $plan->duration ?? '');
+    $oldEndDate = old('end_date', $plan->end_date ?? '');
 @endphp
 
 <div x-data="{
-        startDate: '{{ $oldStart }}',
-        duration: '{{ $oldDuration }}',
-        endDate: '',
-        calculateEndDate() {
-            if (this.startDate && this.duration) {
-                const start = new Date(this.startDate);
-                const durationDays = parseInt(this.duration);
+    startDate: '{{ $oldStart }}',
+    duration: '{{ $oldDuration }}',
+    endDate: '{{ $oldEndDate }}', 
+    calculateEndDate() {
+        if (this.startDate && this.duration) {
+            const start = new Date(this.startDate);
+            const durationDays = parseInt(this.duration);
+            if (!isNaN(durationDays) && durationDays > 0) {
                 start.setDate(start.getDate() + durationDays - 1);
                 this.endDate = start.toISOString().split('T')[0];
             } else {
                 this.endDate = '';
             }
+        } else {
+            this.endDate = '';
         }
-    }"
-    x-init="calculateEndDate()"
-    x-effect="calculateEndDate()"
+    }
+}"
+x-init="$watch('startDate', () => calculateEndDate());
+        $watch('duration', () => calculateEndDate());
+        if (!endDate && startDate && duration) calculateEndDate();"
 >
+
     <div class="space-y-6">
         <!-- Title Input -->
         <div class="group">
@@ -40,7 +47,7 @@
             <input type="text" 
                 name="title" 
                 id="title"
-                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 bg-white shadow-sm hover:shadow-md @error('title') border-red-500 ring-2 ring-red-200 @enderror"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 bg-white shadow-sm hover:shadow-md @error('title')  ring-2 ring-red-200 @enderror"
                 placeholder="Contoh: Tilawah Al-Quran Pagi Hari"
                 value="{{ old('title', $plan->title ?? '') }}" 
                 required>
@@ -64,7 +71,7 @@
             </label>
             <select name="category" 
                     id="category"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white shadow-sm hover:shadow-md @error('category') border-red-500 ring-2 ring-red-200 @enderror"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white shadow-sm hover:shadow-md @error('category')  ring-2 ring-red-200 @enderror"
                     required>
                 <option value="">Pilih Kategori Ibadah</option>
                 <option value="tilawah" {{ (old('category', $plan->category ?? '') == 'tilawah') ? 'selected' : '' }} class="py-2">
@@ -113,7 +120,7 @@
                     <input type="number" 
                         name="target" 
                         id="target"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white shadow-sm hover:shadow-md @error('target') border-red-500 ring-2 ring-red-200 @enderror"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white shadow-sm hover:shadow-md @error('target') ring-2 ring-red-200 @enderror"
                         placeholder="Contoh: 5 halaman, 30 menit"
                         value="{{ old('target', $plan->target ?? '') }}" 
                         min="1"
@@ -187,13 +194,13 @@
             <!-- End Date Input -->
             <div class="group">
                 <label for="end_date" class="text-sm font-semibold text-gray-700 mb-2 flex items-center">
-                    Tanggal Selesai
+                    Tanggal Selesai (autocalculate)
                 </label>
                 <input type="date"
                     name="end_date"
                     id="end_date"
-                    x-bind:value="endDate()"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500"
+                    x-model="endDate"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 bg-gray-100"
                     readonly>
                 </div>
                 @error('end_date')

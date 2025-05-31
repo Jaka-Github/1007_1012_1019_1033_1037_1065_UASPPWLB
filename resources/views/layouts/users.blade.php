@@ -5,22 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dashboard User</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js" defer></script>
     <style>
         [x-cloak] { display: none !important; }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;     /* Full tinggi layar */
-            width: 16rem;      /* Sesuaikan dengan lebar sidebar */
-            z-index: 30;       /* Pastikan di atas konten lain */
-            background: #fff;  /* Atur sesuai tema */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            overflow-y: auto;  /* Jika menu banyak, bisa discroll sendiri */
-        }
-
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen" x-data="{ sidebarOpen: true }" x-cloak>
