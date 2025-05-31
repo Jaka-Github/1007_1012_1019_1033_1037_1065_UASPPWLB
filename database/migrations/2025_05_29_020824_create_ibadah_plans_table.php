@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('target'); // e.g. "1 juz/week", "Senin-Kamis selama Ramadan"
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('duration')->default(0);
+            $table->integer('duration');
             $table->timestamps();
         });
     }
