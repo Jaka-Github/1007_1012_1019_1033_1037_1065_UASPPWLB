@@ -138,41 +138,55 @@
                     <!--Riwayat Log-->
                     @if($plan->logs->isNotEmpty())
                         <div class="mt-6 rounded-xl p-6 shadow-sm">
-                            <h5 class="font-bold text-base text-gray-800 mb-4 flex items-center">
-                                📅 Riwayat Log
-                            </h5>
-                            <ul class="space-y-4">
-                                @foreach($plan->logs->sortByDesc('date') as $log)
-                                    <li class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm flex justify-between items-center">
-                                        <div>
-                                            <p><strong>Tanggal:</strong> {{ $log->date->format('d M Y') }}</p>
-                                            <p><strong>Status:</strong> 
-                                                @if($log->status)
-                                                    <span class="text-green-600 font-semibold">✅ Selesai</span>
-                                                @else
-                                                    <span class="text-red-600 font-semibold">❌ Terlewat</span>
-                                                @endif
-                                            </p>
-                                            @if($log->notes)
-                                                <p><strong>Catatan:</strong> {{ $log->notes }}</p>
-                                            @endif
-                                        </div>
-                                        <div class="flex gap-2">
-                                            <form method="POST" action="{{ route('ibadah.log.destroy', $log->id) }}" onsubmit="return confirm('Yakin hapus log ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition">
-                                                    Hapus
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
+                            <!-- Header dengan tombol toggle -->
+                            <div class="flex items-center justify-between cursor-pointer" onclick="toggleLogHistory()">
+                                <h5 class="font-bold text-base text-gray-800 flex items-center">
+                                    📅 Riwayat Log
+                                    <span class="ml-2 text-sm text-gray-500">({{ $plan->logs->count() }} riwayat)</span>
+                                </h5>
+                                <div class="flex items-center">
+                                    <span id="logToggleText" class="text-sm font-semibold text-gray-600 mr-2">Tampilkan</span>
+                                    <svg id="logToggleIcon" class="w-5 h-5 text-gray-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Konten yang bisa di-toggle -->
+                            <div id="logHistoryContent" class="overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0">
+                                <div class="pt-4">
+                                    <ul class="space-y-4">
+                                        @foreach($plan->logs->sortByDesc('date') as $log)
+                                            <li class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm flex justify-between items-center">
+                                                <div>
+                                                    <p><strong>Tanggal:</strong> {{ $log->date->format('d M Y') }}</p>
+                                                    <p><strong>Status:</strong> 
+                                                        @if($log->status)
+                                                            <span class="text-green-600 font-semibold">✅ Selesai</span>
+                                                        @else
+                                                            <span class="text-red-600 font-semibold">❌ Terlewat</span>
+                                                        @endif
+                                                    </p>
+                                                    @if($log->notes)
+                                                        <p><strong>Catatan:</strong> {{ $log->notes }}</p>
+                                                    @endif
+                                                </div>
+                                                <div class="flex gap-2">
+                                                    <form method="POST" action="{{ route('ibadah.log.destroy', $log->id) }}" onsubmit="return confirm('Yakin hapus log ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition">
+                                                            Hapus
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     @endif
-
-
                 </div>
             @empty
                 <div class="text-center py-16">
@@ -209,5 +223,37 @@
         </div>
     </div>
 </div>
+
+<script>
+let isLogHistoryOpen = false;
+
+    function toggleLogHistory() {
+        const content = document.getElementById('logHistoryContent');
+        const icon = document.getElementById('logToggleIcon');
+        const text = document.getElementById('logToggleText');
+        
+        if (!isLogHistoryOpen) {
+            // Membuka dropdown
+            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.opacity = "1";
+            icon.style.transform = "rotate(180deg)";
+            text.textContent = "Sembunyikan";
+            isLogHistoryOpen = true;
+        } else {
+            // Menutup dropdown
+            content.style.maxHeight = "0";
+            content.style.opacity = "0";
+            icon.style.transform = "rotate(0deg)";
+            text.textContent = "Tampilkan";
+            isLogHistoryOpen = false;
+        }
+    }
+
+    // Optional: Buka dropdown secara default jika ada log terbaru
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleLogHistory();
+    });
+
+</script>
 
 @endsection

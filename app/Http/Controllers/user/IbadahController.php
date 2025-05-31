@@ -56,7 +56,7 @@ class IbadahController extends Controller
     {
         $plan = IbadahPlan::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string',
             'target' => 'required|string',
@@ -65,7 +65,7 @@ class IbadahController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
-        $plan->update($request->only(['title', 'category', 'target', 'duration']));
+        $plan->update($data);
 
         return redirect()->route('ibadah.index')->with('success', 'Rencana ibadah berhasil diperbarui.');
     }
