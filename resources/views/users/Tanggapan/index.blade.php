@@ -97,7 +97,7 @@
                             @foreach($d->tanggapan as $t)
                                 <li class="bg-gray-50 rounded-lg px-3 py-2 shadow-sm flex items-start gap-2">
                                     <div class="flex-shrink-0 mt-1">
-                                        <span class="inline-block w-8 h-8 rounded-full bg-blue-200 text-blue-800 font-bold items-center justify-center">
+                                        <span class="inline-flex w-8 h-8 rounded-full bg-blue-200 text-blue-800 font-bold items-center justify-center">
                                             {{ strtoupper(substr($t->user->name, 0, 1)) }}
                                         </span>
                                     </div>
