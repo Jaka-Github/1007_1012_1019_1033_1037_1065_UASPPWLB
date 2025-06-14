@@ -1,4 +1,9 @@
+[build]
+  publish = "public"
+  command = "npm run build" # Ganti jika perlu
+
 [[redirects]]
-from = "/*"
-to = "index.html"
-status = 200
+  from = "/*"
+  to = "/index.php"
+  status = 200
+  force = true
